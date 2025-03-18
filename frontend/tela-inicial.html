@@ -1,52 +1,40 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcards</title>
-    <link rel="icon" type="image" href="C:\BRUNA one drive\OneDrive\Área de Trabalho\Flashcards\luxa.org-pixelate-01-raio-png-removebg-preview.png">
-    <link rel="stylesheet" href="tela-inicial.css"/>
+import "./tela-inicial.css";
 
-    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/solid.css"
-    integrity="sha384-Tv5i09RULyHKMwX0E8wJUqSOaXlyu3SQxORObAI08iUwIalMmN5L6AvlPX2LMoSE" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css"
-    integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous" />
-
-</head>
-<body>
-    <img src="C:\BRUNA one drive\OneDrive\Área de Trabalho\Flashcards\A_pixel_art_of_a_small__cute_dog_wearing_a_red_sup-removebg-preview.png">
-    <i class="fas fa-cog config"></i>
-    <div class="container">
-        <div class="cinza_escuro">
-            <div class="logo">
-
-                <div class="logo-text">
-                    <div class="flashcards-wrapper">
-                    <div class="flashcards">FLASHCARDS</div>
-                    <div class="text-shadow1">FLASHCARDS</div>
-                    </div>
-                    <span class="java">JAVA</span>
-
-                    <div class="edition-wrapper">
-                        <div class="edition">edition</div>
-                        <div class="text-shadow2">edition</div>
-                    </div>
-                   
-                    <img src="C:\BRUNA one drive\OneDrive\Área de Trabalho\Flashcards\luxa.org-pixelate-01-raio-png-removebg-preview.png" 
-                    class="icone-raio" alt="Ícone de Raio">
-                </div>
-               
+function TelaInicial() {
+  return (
+    <div className="container">
+      <img 
+        src={require("C:/BRUNA one drive/OneDrive/Área de Trabalho/Flashcards/frontend/A_pixel_art_of_a_small__cute_dog_wearing_a_red_sup-removebg-preview.png")} 
+        alt="Imagem de cachorro pixel art"
+      />
+      <i className="fas fa-cog config"></i>
+      <div className="cinza_escuro">
+        <div className="logo">
+          <div className="logo-text">
+            <div className="flashcards-wrapper">
+              <div className="flashcards">FLASHCARDS</div>
+              <div className="text-shadow1">FLASHCARDS</div>
             </div>
+            <span className="java">JAVA</span>
+            <div className="edition-wrapper">
+              <div className="edition">edition</div>
+              <div className="text-shadow2">edition</div>
+            </div>
+            <img 
+              src={require("C:/BRUNA one drive/OneDrive/Área de Trabalho/Flashcards/frontend/luxa.org-pixelate-01-raio-png-removebg-preview.png")} 
+              className="icone-raio" 
+              alt="Ícone de Raio"
+            />
+          </div>
         </div>
-        
-        <div class="botoes">
-            <p class="botao">Começar</p>
-            <p class="botao">Tutorial</p>
-            <p class="botao">Pontuação</p>
-        </div>
+      </div>
+      <div className="botoes">
+        <p className="botao">Começar</p>
+        <p className="botao">Tutorial</p>
+        <p className="botao">Pontuação</p>
+      </div>
     </div>
-  
-</body>
-</html>
+  );
+}
+
+export default TelaInicial;
