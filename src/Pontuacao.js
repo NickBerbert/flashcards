@@ -9,7 +9,7 @@ function Pontuacao() {
     const [pontuacoes, setPontuacoes] = useState([]);
 
     useEffect(() => {
-        api.get("/pontuacoes")
+        api.get("/api/pontuacoes")
             .then((response) => setPontuacoes(response.data))
             .catch((error) => console.error("Erro ao buscar pontuações:", error));
     }, []);

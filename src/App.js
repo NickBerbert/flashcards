@@ -4,6 +4,7 @@ import Comecar from "./Comecar";
 import Tutorial from "./Tutorial";
 import Pontuacao from "./Pontuacao";
 import Questao from "./Questao";
+import PerguntaAberta from "./PerguntaAberta.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/tutorial" element={<Tutorial />} />
           <Route path="/pontuacao" element={<Pontuacao />} />
           <Route path="/questao" element={<Questao />} />
+          <Route path="/perguntaAberta" element={<PerguntaAberta />} />
         </Routes>
       </div>
     </Router>

@@ -1,6 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const path = require("path");
+const path = require("path")
 const bodyParser = require("body-parser");
 const db = require("./config/db");
 
@@ -10,6 +10,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const PORT = 5000;
 
+
+// Rotas para cada página
+app.get("/api/", (req, res) => {
+    res.json({frontend_url: "http://localhost:3000"}); 
+});
+
+app.get("/api/comecar", (req, res) => {
+    res.sendFile(path.join(__dirname, "src", "Comecar.js"));
+});
+
+app.get("/api/tutorial", (req, res) => {
+    res.sendFile(path.join(__dirname, "src", "Tutorial.js"));
+});
+
+app.get("/api/pontuacao", (req, res) => {
+    res.sendFile(path.join(__dirname, "src", "Pontuacao.js"));
+});
+
+app.get("/api/perguntaAberta", (req, res) => {
+    res.sendFile(path.join(__dirname, "src", "PerguntaAberta.jsx"));
+});
 
 // Rota para mostrar as tres maiores pontuações
 app.get("/api/pontuacoes", (req, res) => {
@@ -109,4 +130,6 @@ app.post("/api/questoes", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+module.exports = app;
 
