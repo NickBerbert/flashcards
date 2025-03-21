@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import api from "./api";
-import { useNavigate } from "react-router-dom"; 
 import "./perguntaAberta.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
 
-function Pergunta() {
-  const navigate = useNavigate();
-    const [questoes, setPerguntasAbertas] = useState([]);
+function PerguntaAberta() {
+  useEffect(() => {
+            fetch("http://localhost:5000/perguntaAberta")
+              .then((res) => res.json())
+          }, []);
 
-    useEffect(() => {
-        api.get("/api/questoes")
-            .then((response) => setPerguntasAbertas(response.data))
-            .catch((error) => console.error("Erro ao buscar questões:", error));
-    }, []);
   return (
     <>
       <div className="logo">
@@ -38,4 +33,4 @@ function Pergunta() {
   );
 }
 
-export default Pergunta;
+export default PerguntaAberta;

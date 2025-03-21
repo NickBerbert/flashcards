@@ -40,7 +40,7 @@ INSERT INTO respostas (resposta, correta, id_questao)
 VALUES ('VVVV', TRUE, 1);
 
 INSERT INTO questoes (enunciado) 
-VALUES ('Declare uma variável inteira em java com o valor 10!')
+VALUES ('Declare uma variável inteira em java com o valor 10!');
 
 INSERT INTO respostas (resposta, correta, id_questao) 
 VALUES ('int numero = 10; int fatorial = 1; for (int i = 1; i <= numero; i++) { fatorial *= i; 

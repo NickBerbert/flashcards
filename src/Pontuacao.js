@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import api from "./api";
 import { useNavigate } from "react-router-dom"; 
 import "./pontuacao.css"; 
 import logo from "./public/A_pixel_art_of_a_small__cute_dog_wearing_a_red_sup-removebg-preview.png";  
 
 function Pontuacao() {
-    const navigate = useNavigate();
-    const [pontuacoes, setPontuacoes] = useState([]);
+        useEffect(() => {
+          fetch("http://localhost:5000/pontuacao")
+            .then((res) => res.json())
+        }, []);
+      const navigate = useNavigate();
 
-    useEffect(() => {
-        api.get("/api/pontuacoes")
-            .then((response) => setPontuacoes(response.data))
-            .catch((error) => console.error("Erro ao buscar pontuações:", error));
-    }, []);
+    //    const [pontuacoes, setPontuacoes] = useState([]);
+    const [pontuacoes] = useState([]);
 
     const voltar = () => {
         navigate('/'); 

@@ -1,6 +1,5 @@
 const cors = require("cors");
 const express = require("express");
-const path = require("path")
 const bodyParser = require("body-parser");
 const db = require("./config/db");
 
@@ -12,28 +11,37 @@ const PORT = 5000;
 
 
 // Rotas para cada página
-app.get("/api/", (req, res) => {
-    res.json({frontend_url: "http://localhost:3000"}); 
+app.get("/", (req, res) => {
+    try {
+        res.json({ message: "API tela-inicial funcionando!" });  
+    } catch (error) {
+        console.error("Erro ao comparar a senha:", error);
+        return res.status(500).send("Erro no servidor.");
+    }
 });
 
-app.get("/api/comecar", (req, res) => {
-    res.sendFile(path.join(__dirname, "src", "Comecar.js"));
+app.get("/comecar", (req, res) => {
+    res.json({ message: "API comecar funcionando!" });
 });
 
-app.get("/api/tutorial", (req, res) => {
-    res.sendFile(path.join(__dirname, "src", "Tutorial.js"));
+app.get("/tutorial", (req, res) => {
+    res.json({ message: "API tutorial funcionando!" });
 });
 
-app.get("/api/pontuacao", (req, res) => {
-    res.sendFile(path.join(__dirname, "src", "Pontuacao.js"));
+app.get("/pontuacao", (req, res) => {
+    res.json({ message: "API pontuacao funcionando!" });
 });
 
-app.get("/api/perguntaAberta", (req, res) => {
-    res.sendFile(path.join(__dirname, "src", "PerguntaAberta.jsx"));
+app.get("/perguntaAberta", (req, res) => {
+    res.json({ message: "API perguntaAberta funcionando!" });
+});
+
+app.get("/questao", (req, res) => {
+    res.json({ message: "API questao funcionando!" });
 });
 
 // Rota para mostrar as tres maiores pontuações
-app.get("/api/pontuacoes", (req, res) => {
+app.get("/pontuacoes", (req, res) => {
     db.query("SELECT * FROM usuarios ORDER BY pontuacao DESC LIMIT 3", (err, results) => {
         if (err) {
             console.error("Erro ao buscar usuarios:", err);
@@ -46,7 +54,7 @@ app.get("/api/pontuacoes", (req, res) => {
 
 
 // Rota para cadastrar o usuário
-app.post("/api/cadastrar", (req, res) => {
+app.post("/cadastrar", (req, res) => {
     const { nome } = req.body;
 
     // Verificar se todos os campos foram preenchidos
@@ -78,7 +86,7 @@ app.post("/api/cadastrar", (req, res) => {
     });
 
 // Rota para mostrar questão
-app.post("/api/questoes", (req, res) => {
+app.post("/questoes", (req, res) => {
     const { respostaUsuario, idQuestao, idUsuario } = req.body; // Esperando a resposta do usuário, ID da questão e ID do usuário
 
     // Buscar o enunciado da questão
