@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import "./pontuacao.css"; 
-import logo from "./public/A_pixel_art_of_a_small__cute_dog_wearing_a_red_sup-removebg-preview.png";  
+import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png"; 
+import MoedaIcone from "./public/22542143-pixel-arte-jogos-moeda-moeda-vetor-removebg-preview.png";  
 
 function Pontuacao() {
-        useEffect(() => {
-          fetch("http://localhost:5000/pontuacao")
-            .then((res) => res.json())
-        }, []);
-      const navigate = useNavigate();
+    const [pontuacoes, setPontuacoes] = useState([]);
 
-    //    const [pontuacoes, setPontuacoes] = useState([]);
-    const [pontuacoes] = useState([]);
+    useEffect(() => {
+        fetch("http://localhost:5000/pontuacao")
+            .then((res) => res.json())
+            .then((data) => setPontuacoes(data))
+            .catch((err) => console.error("Erro ao buscar pontuações:", err));
+    }, []);
+
+    const navigate = useNavigate();
 
     const voltar = () => {
         navigate('/'); 
@@ -19,29 +22,25 @@ function Pontuacao() {
 
     return (
         <div className="container">
-            <div className="logo">
-                <div className="logo-text">
-                    <div className="flashcards-wrapper">
-                        <div className="flashcards">FLASHCARDS</div>
-                        <div className="text-shadow1">FLASHCARDS</div>
+            <div className="pontuacao-logo">
+                <div className="pontuacao-logo-text">
+                    <div className="pontuacao-flashcards-wrapper">
+                        <div className="pontuacao-flashcards">FLASHCARDS</div>
+                        <div className="pontuacao-text-shadow1">FLASHCARDS</div>
                     </div>
                     <span className="java">JAVA</span>
-                    <div className="edition-wrapper">
-                        <div className="edition">edition</div>
-                        <div className="text-shadow2">edition</div>
+                    <div className="pontuacao-edition-wrapper">
+                        <div className="pontuacao-edition">edition</div>
+                        <div className="pontuacao-text-shadow2">edition</div>
                     </div>
-                    <img 
-                        src={logo}  
-                        className="icone-raio" 
-                        alt="Ícone de Raio" 
-                    />
+                    <img src={RaioIcone} className="pontuacao-icone-raio" alt="Ícone de Raio" />
                 </div>
             </div>
-            <div className="cinza_escuro">
+            <div className="pontuacao-cinza_escuro">
                 <div className="pontuacoes">
                     <div className="melhores-container">
                         <img 
-                            src="/22542143-pixel-arte-jogos-moeda-moeda-vetor-removebg-preview.png"  
+                            src={MoedaIcone}  
                             className="icone-moeda"   
                             alt="Ícone moeda" 
                         />
@@ -60,8 +59,8 @@ function Pontuacao() {
                     </ol>
                 </div>
             </div>
-            <button className="botaoVoltar" onClick={voltar}>
-                <p className="voltar">Voltar</p>
+            <button className="pontuacao-botaoVoltar" onClick={voltar}>
+                <p className="pontuacao-voltar">Voltar</p>
             </button>
         </div>
     );

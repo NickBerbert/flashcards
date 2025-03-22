@@ -11,7 +11,7 @@ body{
 }
 
 
-.logo {
+.pontuacao-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +21,7 @@ body{
     margin-top: -100px;
 }
 
-.logo-text {
+.pontuacao-logo-text {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -29,7 +29,7 @@ body{
 }
 
 
-.icone-raio {
+.pontuacao-icone-raio {
     position: absolute;
     right: -65px;
     top: 5px;
@@ -38,13 +38,13 @@ body{
     padding-top: 22px;
 }
 
-.flashcards-wrapper, .edition-wrapper {
+.pontuacao-flashcards-wrapper, .pontuacao-edition-wrapper {
     position: relative;
     display: inline-block;
 }
 
 /* Sombra para o "FLASHCARDS" */
-.text-shadow1 {
+.pontuacao-text-shadow1 {
     position: absolute;
     color: red;
     font-size: 60px;
@@ -55,7 +55,7 @@ body{
 }
 
 /* Sombra para o "edition" */
-.text-shadow2 {
+.pontuacao-text-shadow2 {
     position: absolute;
     color: red;
     font-size: 35px;
@@ -66,7 +66,7 @@ body{
 }
 
 /* Texto principal */
-.flashcards {
+.pontuacao-flashcards {
     color: #fff;
     font-size: 60px;
     padding-top: 25px;
@@ -74,7 +74,7 @@ body{
     z-index: 1;
 }
 
-.edition {
+.pontuacao-edition {
     color: #fff;
     font-size: 35px;
     position: relative;
@@ -83,14 +83,14 @@ body{
     z-index: 1;
 }
 
-.java {
+.pontuacao-java {
     color: #F81919;
     font-size: 75px;
     padding-right: 45px;
     margin-top: -20px;
 }
 
-.cinza_escuro {
+.pontuacao-cinza_escuro {
     display: flex;
     justify-content: center;
     background-color: #222;
@@ -140,7 +140,7 @@ ol{
 
 }
 
-.botaoVoltar{
+.pontuacao-botaoVoltar{
     display: flex;
     background-color: #4FA3A9;
     width: 120px;
@@ -153,7 +153,7 @@ ol{
     margin-left: 50px;
 }
 
-.voltar{
+.pontuacao-voltar{
     display: flex;
     color: black;
     font-family: 'Jersey 10', sans-serif;
@@ -162,7 +162,7 @@ ol{
 
 }
 
-.botaoVoltar:hover {
+.pontuacao-botaoVoltar:hover {
     background-color: #4FA3A9;
     transform: scale(1.05);
 }

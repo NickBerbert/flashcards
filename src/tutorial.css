@@ -5,7 +5,7 @@ body{
     font-family: 'Jersey 10', sans-serif;
 }
 
-.icone-raio {
+.tutorial-icone-raio {
     position: absolute;
     top: 5px;
     width: 70px;
@@ -13,13 +13,13 @@ body{
     padding-top: 10px;
 }
 
-.flashcards{
+.tutorial-flashcards{
     color: #fff;
     font-size: 70px;
     padding-left: 70px;
 }
 
-.container{
+.tutorial-container{
     background-color: #FFD302;
     font-size: 30px;
     margin-top: 80px;
@@ -43,7 +43,7 @@ body{
     padding: 40px;
 }
 
-.botao{
+.tutorial-botao{
     display: flex;
     background-color: #4FA3A9;;
     width: 120px;
@@ -63,7 +63,7 @@ body{
 
 }
 
-.botao:hover {
+.tutorial-botao:hover {
     background-color: #4FA3A9;
     transform: scale(1.05);
 }

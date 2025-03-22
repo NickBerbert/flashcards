@@ -1,7 +1,6 @@
 CREATE TABLE usuarios (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(255) NOT NULL,
-    numeroDeAcertos INTEGER DEFAULT 0,
     pontuacao INTEGER DEFAULT 0
 );
 
@@ -15,8 +14,10 @@ CREATE TABLE respostas (
     resposta VARCHAR(255) NOT NULL, 
     correta BOOLEAN NOT NULL, 
     id_questao INTEGER,
-    CONSTRAINT fk_questao FOREIGN KEY (id_questao) REFERENCES             questoes(id)
+    CONSTRAINT fk_questao FOREIGN KEY (id_questao) REFERENCES questoes(id)
 );
+
+INSERT INTO usuarios (nome, pontuacao) VALUES ('Nick', 90), ('Dexter', 75), ('Bruna', 59);
 
 INSERT INTO questoes (enunciado) 
 VALUES ('
@@ -45,6 +46,8 @@ VALUES ('Declare uma variável inteira em java com o valor 10!');
 INSERT INTO respostas (resposta, correta, id_questao) 
 VALUES ('int numero = 10; int fatorial = 1; for (int i = 1; i <= numero; i++) { fatorial *= i; 
 }', TRUE, 2);
+
+
 
 
 

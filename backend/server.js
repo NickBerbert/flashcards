@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const db = require("./config/db");
 
 const app = express();
+app.use(cors());
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -28,8 +29,15 @@ app.get("/tutorial", (req, res) => {
     res.json({ message: "API tutorial funcionando!" });
 });
 
+// Rota para mostrar a página e as tres maiores pontuações
 app.get("/pontuacao", (req, res) => {
-    res.json({ message: "API pontuacao funcionando!" });
+    db.query("SELECT nome, pontuacao FROM usuarios ORDER BY pontuacao DESC LIMIT 3", (err, results) => {
+        if (err) {
+            console.error("Erro ao buscar pontuações:", err);
+            return res.status(500).send("Erro no servidor");
+        }
+        res.json(results);
+    });
 });
 
 app.get("/perguntaAberta", (req, res) => {
@@ -38,18 +46,6 @@ app.get("/perguntaAberta", (req, res) => {
 
 app.get("/questao", (req, res) => {
     res.json({ message: "API questao funcionando!" });
-});
-
-// Rota para mostrar as tres maiores pontuações
-app.get("/pontuacoes", (req, res) => {
-    db.query("SELECT * FROM usuarios ORDER BY pontuacao DESC LIMIT 3", (err, results) => {
-        if (err) {
-            console.error("Erro ao buscar usuarios:", err);
-            res.status(500).send("Erro no servidor");
-            return;
-        }
-        res.json(results);
-    });
 });
 
 

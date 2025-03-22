@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./tutorial.css"; 
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
 
@@ -10,12 +11,18 @@ function Tutorial() {
         .then((data) => setMessage(`Backend conectado: ${data.message}`))
         .catch((err) => setMessage("Erro ao conectar ao backend!"));
     }, []);
+
+    const navigate = useNavigate();
+
+    const voltar = () => {
+      navigate('/'); 
+  };
   
         return (
           <div className="tutorial">
-           <img src={RaioIcone} className="icone-raio" alt="Ícone de Raio" />
-            <span className="flashcards">FLASHCARDS</span>
-            <div className="container">
+           <img src={RaioIcone} className="tutorial-icone-raio" alt="Ícone de Raio" />
+            <span className="tutorial-flashcards">FLASHCARDS</span>
+            <div className="tutorial-container">
               <span className="como">Como jogar:</span>
               <div className="texto1-tutorial">
                 <li>
@@ -30,7 +37,7 @@ function Tutorial() {
                 </li>
               </div>
             </div>
-            <button className="botao">
+            <button className="tutorial-botao" onClick={voltar}>
               <p className="botao-entendi">Entendi!</p>
             </button>
             </div>

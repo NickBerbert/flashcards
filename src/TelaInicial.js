@@ -19,6 +19,7 @@ function TelaInicial() {
           <div className="flashcards-wrapper">
             <div className="flashcards">FLASHCARDS</div>
             <div className="text-shadow1">FLASHCARDS</div>
+            <img src={RaioIcone} className="icone-raio" alt="Ícone de Raio" />
           </div>
           <span className="java">JAVA</span>
 
@@ -31,7 +32,6 @@ function TelaInicial() {
       
       <i className="fas fa-cog config"></i>
 
-      <img src={RaioIcone} className="icone-raio" alt="Ícone de Raio" />
       </div>
 
       <div className="botoes">
