@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./tela-inicial.css"; 
 import logo from "./public/A_pixel_art_of_a_small__cute_dog_wearing_a_red_sup-removebg-preview.png";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
+import Config from "./public/font-awesome-4.7.0/css/font-awesome.min.css";
 
 function TelaInicial() {
       useEffect(() => {
@@ -12,32 +13,32 @@ function TelaInicial() {
   const navigate = useNavigate();
   return (
     <div className="container">
-      <div className="cinza_escuro">
-      <div className="logo-container">
-        <img src={logo} className="logo-cachorro" alt="Cachorro fofo" />
-        <div className="logo-text">
-          <div className="flashcards-wrapper">
-            <div className="flashcards">FLASHCARDS</div>
-            <div className="text-shadow1">FLASHCARDS</div>
-            <img src={RaioIcone} className="icone-raio" alt="Ícone de Raio" />
+      <div className="telaInicial-cinza_escuro">
+      <div className="telaInicial-logo-container">
+        <img src={logo} className="telaInicial-logo-cachorro" alt="Cachorro fofo" />
+        <div className="telaInicial-logo-text">
+          <div className="telaInicial-flashcards-wrapper">
+            <div className="telaInicial-flashcards">FLASHCARDS</div>
+            <div className="telaInicial-text-shadow1">FLASHCARDS</div>
+            <img src={RaioIcone} className="telaInicial-icone-raio" alt="Ícone de Raio" />
           </div>
-          <span className="java">JAVA</span>
+          <span className="telaInicial-java">JAVA</span>
 
-          <div className="edition-wrapper">
-            <div className="edition">edition</div>
-            <div className="text-shadow2">edition</div>
+          <div className="telaInicial-edition-wrapper">
+            <div className="telaInicial-edition">edition</div>
+            <div className="telaInicial-text-shadow2">edition</div>
           </div>
         </div>
       </div>
       
-      <i className="fas fa-cog config"></i>
+      <i src={Config} className="fa fa-cog"></i>
 
       </div>
 
-      <div className="botoes">
-        <p className="botao" onClick={() => navigate("/comecar")}>Começar</p>
-        <p className="botao" onClick={() => navigate("/tutorial")}>Tutorial</p>
-        <p className="botao" onClick={() => navigate("/pontuacao")}>Pontuação</p>
+      <div className="telaInicial-botoes">
+        <p className="telaInicial-botao" onClick={() => navigate("/comecar")}>Começar</p>
+        <p className="telaInicial-botao" onClick={() => navigate("/tutorial")}>Tutorial</p>
+        <p className="telaInicial-botao" onClick={() => navigate("/pontuacao")}>Pontuação</p>
       </div>
     </div>
   );
