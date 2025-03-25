@@ -1,36 +1,19 @@
-import React, { useEffect, useState } from "react";
-import "./perguntaAberta.css";
+import React, { useState, useEffect } from "react";
+import "./perguntaOptativa.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
+import { useLocation } from "react-router-dom";
 
-function PerguntaAberta() {
-  const [questao, setQuestao] = useState(null);
+function PerguntaOptativa() {
+  const location = useLocation();
+  const { questao } = location.state || {}; // Acessando a questão passada pela navegação
   const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [respostaCorreta, setRespostaCorreta] = useState(null);
 
-  useEffect(() => {
-    // 🔹 Requisição para buscar uma questão aleatória
-    fetch("http://localhost:5000/questaoAtual", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          setMensagem(data.error);
-        } else {
-          setQuestao(data);
-          setRespostaCorreta(null); // Reseta a resposta correta ao carregar nova questão
-          setMensagem(""); // Reseta a mensagem ao carregar nova questão
-        }
-      })
-      .catch((error) => console.error("Erro ao buscar questão:", error));
-  }, []);
-
   const enviarResposta = () => {
     if (!questao) return;
 
-    fetch("http://localhost:5000/questaoAtual", {
+    fetch("http://localhost:5000/perguntaOptativa", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -57,25 +40,25 @@ function PerguntaAberta() {
   return (
     <>
       <div className="logo">
-        <img src={RaioIcone} className="perguntaAberta-icone-raio" alt="Ícone de Raio" />
-        <span className="perguntaAberta-flashcards">FLASHCARDS</span>
+        <img src={RaioIcone} className="perguntaOptativa-icone-raio" alt="Ícone de Raio" />
+        <span className="perguntaOptativa-flashcards">FLASHCARDS</span>
       </div>
 
-      <div className="perguntaAberta-pergunta">
+      <div className="perguntaOptativa-pergunta">
         <span className="pergunta1">
           {questao ? questao.enunciado : "Carregando questão..."}
         </span>
       </div>
 
-      <div className="perguntaAberta-resposta">
+      <div className="perguntaOptativa-resposta">
         <input
           type="text"
           placeholder="Digite a resposta"
           value={respostaUsuario}
           onChange={(e) => setRespostaUsuario(e.target.value)}
         />
-        <button className="perguntaAberta-botaoEnviar" onClick={enviarResposta}>
-          <p className="perguntaAberta-enviar">Enviar</p>
+        <button className="perguntaOptativa-botaoEnviar" onClick={enviarResposta}>
+          <p className="perguntaOptativa-enviar">Enviar</p>
         </button>
       </div>
 
@@ -85,4 +68,4 @@ function PerguntaAberta() {
   );
 }
 
-export default PerguntaAberta;
+export default PerguntaOptativa;

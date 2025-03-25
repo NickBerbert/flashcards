@@ -44,7 +44,11 @@ app.get("/perguntaAberta", (req, res) => {
     res.json({ message: "API perguntaAberta funcionando!" });
 });
 
-app.get("/questao", (req, res) => {
+app.get("/perguntaOptativa", (req, res) => {
+    res.json({ message: "API perguntaOptativa funcionando!" });
+});
+
+app.get("/questaoAtual", (req, res) => {
     res.json({ message: "API questao funcionando!" });
 });
 
@@ -82,26 +86,40 @@ app.post("/cadastrar", (req, res) => {
     });
 
 // Rota para mostrar questão
-app.post("/questoes", (req, res) => {
-    const { respostaUsuario, idQuestao, idUsuario } = req.body; // Esperando a resposta do usuário, ID da questão e ID do usuário
+app.post("/questaoAtual", (req, res) => {
+    const { respostaUsuario, idQuestao, idUsuario } = req.body;
 
-    // Buscar o enunciado da questão
-    db.query("SELECT enunciado FROM questoes WHERE id = ?", [idQuestao], (err, questionResults) => {
-        if (err) {
-            console.error("Erro ao buscar questão:", err);
-            return res.status(500).send("Erro no servidor");
-        }
+    // Se não houver parâmetros, retorna uma questão aleatória
+    if (!respostaUsuario && !idQuestao && !idUsuario) {
+        return db.query(
+            "SELECT id, enunciado FROM questoes ORDER BY RAND() LIMIT 1;",
+            (err, results) => {
+                if (err) {
+                    console.error("Erro ao buscar questão:", err);
+                    return res.status(500).send("Erro no servidor");
+                }
 
-        if (questionResults.length === 0) {
-            return res.status(404).json({ error: "Questão não encontrada." });
-        }
+                if (results.length === 0) {
+                    return res.status(404).json({ error: "Nenhuma questão encontrada." });
+                }
 
-        const enunciado = questionResults[0].enunciado;
+                res.json(results[0]); // Retorna uma única questão
+            }
+        );
+    }
 
-        // Buscar a resposta correta para a questão
-        db.query("SELECT resposta FROM respostas WHERE id_questao = ?", [idQuestao], (err, answerResults) => {
+    // Valida se os parâmetros foram enviados para a resposta do usuário
+    if (!idQuestao || !idUsuario || respostaUsuario === undefined) {
+        return res.status(400).json({ error: "Parâmetros ausentes." });
+    }
+
+    // Busca a resposta correta da questão
+    db.query(
+        "SELECT resposta FROM respostas WHERE id_questao = ?",
+        [idQuestao],
+        (err, answerResults) => {
             if (err) {
-                console.error("Erro ao buscar respostas:", err);
+                console.error("Erro ao buscar resposta:", err);
                 return res.status(500).send("Erro no servidor");
             }
 
@@ -111,24 +129,31 @@ app.post("/questoes", (req, res) => {
 
             const respostaCorreta = answerResults[0].resposta;
 
-            // Comparar a resposta do usuário com a resposta correta
+            // Se a resposta estiver errada mostra mensagem e resposta correta
             if (respostaUsuario !== respostaCorreta) {
-                return res.status(400).json({ error: "Resposta incorreta." });
+                return res.status(400).json({
+                    error: "Resposta incorreta.",
+                    respostaCorreta: respostaCorreta,
+                });
             }
 
-            // Se a resposta estiver correta, adicionar 10 pontos à pontuação do usuário
-            db.query("UPDATE usuarios SET pontuacao = pontuacao + 10 WHERE id = ?", [idUsuario], (err, updateResult) => {
-                if (err) {
-                    console.error("Erro ao atualizar a pontuação:", err);
-                    return res.status(500).send("Erro no servidor");
-                }
+            // Se a resposta estiver correta, adiciona 10 pontos ao usuário
+            db.query(
+                "UPDATE usuarios SET pontuacao = pontuacao + 10 WHERE id = ?",
+                [idUsuario],
+                (err) => {
+                    if (err) {
+                        console.error("Erro ao atualizar a pontuação:", err);
+                        return res.status(500).send("Erro no servidor");
+                    }
 
-                // Se a atualização for bem-sucedida, enviar uma resposta de sucesso
-                res.json({ message: "Resposta Correta! Pontuação atualizada." });
-            });
-        });
-    });
+                    res.json({ message: "Resposta Correta! Pontuação atualizada." });
+                }
+            );
+        }
+    );
 });
+
 
 
 app.listen(PORT, () => {

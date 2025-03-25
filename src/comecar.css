@@ -26,7 +26,7 @@ img{
     margin-top: 200px;
 }
 
-.logo {
+.comecar-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,14 +34,14 @@ img{
     gap: 5px;
 }
 
-.logo-text {
+.comecar-logo-text {
     display: flex;
     flex-direction: column;
     position: relative;
     align-items: center;
 }
 
-.config {
+.comecar-config {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -50,7 +50,7 @@ img{
     cursor: pointer;
 }
 
-.icone-raio {
+.comecar-icone-raio {
     position: absolute;
     right: -40px;
     top: 0px;
@@ -59,13 +59,13 @@ img{
     padding-top: 22px;
 }
 
-.flashcards-wrapper, .edition-wrapper {
+.comecar-flashcards-wrapper, .comecar-edition-wrapper {
     position: relative;
     display: inline-block;
 }
 
 /* Sombra para o "FLASHCARDS" */
-.text-shadow1 {
+.comecar-text-shadow1 {
     position: absolute;
     color: red;
     font-size: 60px;
@@ -76,7 +76,7 @@ img{
 }
 
 /* Sombra para o "edition" */
-.text-shadow2 {
+.comecar-text-shadow2 {
     position: absolute;
     color: red;
     font-size: 35px;
@@ -87,7 +87,7 @@ img{
 }
 
 /* Texto principal */
-.flashcards {
+.comecar-flashcards {
     color: #fff;
     font-size: 60px;
     padding-top: 25px;
@@ -96,7 +96,7 @@ img{
     margin-right: 20px;
 }
 
-.edition {
+.comecar-edition {
     color: #fff;
     font-size: 35px;
     position: relative;
@@ -105,7 +105,7 @@ img{
     z-index: 1;
 }
 
-.java {
+.comecar-java {
     color: #F81919;
     margin-top: -20px;
     font-size: 75px;
