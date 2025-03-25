@@ -31,7 +31,7 @@ function TelaInicial() {
         </div>
       </div>
       
-      <i src={Config} className="fa fa-cog"></i>
+      <i src={Config} id="cog" className="fa fa-cog"></i>
 
       </div>
 
