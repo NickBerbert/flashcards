@@ -18,14 +18,14 @@ img{
     
 }
 
-.cinza_escuro {
+.telaInicial-cinza_escuro {
     background-color: #222;
     width: 100vw;
     padding: 0px;
     height: 200px;
 }
 
-.logo {
+.telaInicial-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,14 +33,14 @@ img{
     gap: 5px;
 }
 
-.logo-text {
+.telaInicial-logo-text {
     display: flex;
     flex-direction: column;
     position: relative;
     align-items: center;
 }
 
-.config {
+i  {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -49,7 +49,7 @@ img{
     cursor: pointer;
 }
 
-.icone-raio {
+.telaInicial-icone-raio {
     position: absolute;
     right: -65px;
     top: 5px;
@@ -58,13 +58,13 @@ img{
     padding-top: 22px;
 }
 
-.flashcards-wrapper, .edition-wrapper {
+.telaInicial-flashcards-wrapper, .telaInicial-edition-wrapper {
     position: relative;
     display: inline-block;
 }
 
 /* Sombra para o "FLASHCARDS" */
-.text-shadow1 {
+.telaInicial-text-shadow1 {
     position: absolute;
     color: red;
     font-size: 60px;
@@ -75,7 +75,7 @@ img{
 }
 
 /* Sombra para o "edition" */
-.text-shadow2 {
+.telaInicial-text-shadow2 {
     position: absolute;
     color: red;
     font-size: 35px;
@@ -86,7 +86,7 @@ img{
 }
 
 /* Texto principal */
-.flashcards {
+.telaInicial-flashcards {
     color: #fff;
     font-size: 60px;
     padding-top: 25px;
@@ -94,7 +94,7 @@ img{
     z-index: 1;
 }
 
-.edition {
+.telaInicial-edition {
     color: #fff;
     font-size: 35px;
     position: relative;
@@ -103,21 +103,26 @@ img{
     z-index: 1;
 }
 
-.java {
+.telaInicial-edition-wrapper{
+    margin-top: -5px;
+}
+
+.telaInicial-java {
     color: #F81919;
     font-size: 75px;
     padding-right: 45px;
+    margin-top: -22px;
 }
 
 /* Botões */
-.botoes {
+.telaInicial-botoes {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
 }
 
-.botao {
+.telaInicial-botao {
     background-color: #FFD302;
     color: black;
     padding: 10px 20px;
@@ -132,7 +137,7 @@ img{
     transition: all 0.2s ease-in-out;
 }
 
-.botao:hover {
+.telaInicial-botao:hover {
     background-color: #FFD302;
     transform: scale(1.05);
 }
@@ -146,7 +151,7 @@ img{
     text-align: center;
 }
 
-.logo-container {
+.telaInicial-logo-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,12 +159,12 @@ img{
     gap: 10px;
 }
 
-.logo-cachorro {
+.telaInicial-logo-cachorro {
     width: 150px; /* Ajuste o tamanho da imagem do cachorro */
     height: auto;
 }
 
-.logo-text {
+.telaInicial-logo-text {
     display: flex;
     flex-direction: column;
     align-items: center;
