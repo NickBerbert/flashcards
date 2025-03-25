@@ -122,10 +122,11 @@ ol{
     margin-top: 50px;
 }
 
-.icone-moeda {
-    width: 80px; /* Ajuste o tamanho se necessário */
-    height: 80px;
-    margin-left: 0; /* Remove o deslocamento para a esquerda */
+.pontuacao-icone-moeda {
+    width: 65px; /* Ajuste o tamanho se necessário */
+    height: 65px;
+    margin-left: 45px; /* Remove o deslocamento para a esquerda */
+    margin-top: 160px;
 }
 
 .melhores-pontuacoes {
@@ -137,6 +138,7 @@ ol{
     font-size: 35px;
     text-align: center;
     padding: 0px;
+    margin-left: 110px;
 
 }
 
