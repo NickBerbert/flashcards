@@ -65,7 +65,32 @@ body {
     transform: scale(1.05);
 }
 
-.perguntaOptativa-alternativa{
+.perguntaOptativa-A, .perguntaOptativa-B, .perguntaOptativa-C, .perguntaOptativa-D{
     background-color: #FFD302;
-    
+    border-radius: 10px;
+    width: 160px;
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 20px;
+}
+
+
+
+.perguntaOptativa-A:hover {
+    background-color: #FFD302;
+    transform: scale(1.05);
+}
+
+.perguntaOptativa-B:hover {
+    background-color: #FFD302;
+    transform: scale(1.05);
+}
+
+.perguntaOptativa-C:hover {
+    background-color: #FFD302;
+    transform: scale(1.05);
+}
+
+.perguntaOptativa-D:hover {
+    background-color: #FFD302;
+    transform: scale(1.05);
 }

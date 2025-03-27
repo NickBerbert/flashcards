@@ -57,12 +57,7 @@ function PerguntaOptativa() {
             <span className="perguntaOptativa-pergunta1">Pergunta</span>
           </div>
 
-          <button className="botaoProxima">
-            <p className="proxima">Próxima</p>
-          </button>
-        </div>
-
-        <div className="perguntaOptativa-alternativa">
+          <div className="perguntaOptativa-alternativa">
           <button className="perguntaOptativa-A">
             <p> a) VFVV</p>
           </button>
@@ -76,6 +71,13 @@ function PerguntaOptativa() {
             <p> d) FVFV</p>
           </button>
         </div>
+
+          <button className="botaoProxima">
+            <p className="proxima">Próxima</p>
+          </button>
+        </div>
+
+        
 
 
       </div>
