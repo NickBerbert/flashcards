@@ -25,6 +25,10 @@ app.get("/comecar", (req, res) => {
     res.json({ message: "API comecar funcionando!" });
 });
 
+app.get("/cadastrar", (req, res) => {
+    res.json({ message: "API cadastrar funcionando!" });
+});
+
 app.get("/tutorial", (req, res) => {
     res.json({ message: "API tutorial funcionando!" });
 });
@@ -63,98 +67,103 @@ app.post("/cadastrar", (req, res) => {
     }
 
     // Verificar se o nome já existe no banco de dados
-    db.query("SELECT * FROM usuarios WHERE nome = ?", [nome], (err, results) => {
+db.query("SELECT * FROM usuarios WHERE nome = ?", [nome], (err, results) => {
+    if (err) {
+        console.error("Erro ao verificar nome:", err);
+        return res.status(500).json({ error: "Erro no servidor." });
+    }
+
+    if (results.length > 0) {
+        // Se o usuário já existe, retorna o ID do usuário
+        return res.status(200).json({ 
+            message: "Usuário já cadastrado. Credenciais recuperadas com sucesso!",
+            id: results[0].id // Pegando o ID diretamente do resultado da consulta
+        });
+    }
+
+    // Se o nome não existir, insere o novo usuário no banco de dados
+    db.query("INSERT INTO usuarios (nome) VALUES (?)", [nome], (err, result) => {
         if (err) {
-            console.error("Erro ao verificar nome:", err);
+            console.error("Erro ao cadastrar usuário:", err);
             return res.status(500).json({ error: "Erro no servidor." });
         }
 
-        if (results.length > 0) {
-            return res.status(400).json({ error: "Nome já cadastrado." });
-        }
-
-            // Inserir o usuário no banco de dados
-            db.query("INSERT INTO usuarios (nome) VALUES (?)", [nome], (err, result) => {
-                if (err) {
-                    console.error("Erro ao cadastrar usuário:", err);
-                    return res.status(500).json({ error: "Erro no servidor." });
-                }
-
-                res.status(201).json({ message: "Usuário cadastrado com sucesso!" }); 
-            });
-        });
+        // Retorna o ID do usuário recém-criado
+        res.status(201).json({ 
+            message: "Usuário cadastrado com sucesso!",
+            id: result.insertId 
+        }); 
     });
+});
+});
 
-// Rota para mostrar questão
-app.post("/questaoAtual", (req, res) => {
-    const { respostaUsuario, idQuestao, idUsuario } = req.body;
 
-    // Se não houver parâmetros, retorna uma questão aleatória
-    if (!respostaUsuario && !idQuestao && !idUsuario) {
-        return db.query(
-            "SELECT id, enunciado FROM questoes ORDER BY RAND() LIMIT 1;",
+    app.post("/questaoAtual", (req, res) => {
+        const { idUsuario } = req.body;
+    
+        if (!idUsuario) {
+            return res.status(400).json({ error: "ID do usuário não informado!" });
+        }
+    
+        db.query(
+            "SELECT id, enunciado, tipo FROM questoes ORDER BY RAND() LIMIT 1;",
             (err, results) => {
                 if (err) {
                     console.error("Erro ao buscar questão:", err);
-                    return res.status(500).send("Erro no servidor");
+                    return res.status(500).json({ error: "Erro no servidor" });
                 }
-
+    
                 if (results.length === 0) {
                     return res.status(404).json({ error: "Nenhuma questão encontrada." });
                 }
-
-                res.json(results[0]); // Retorna uma única questão
+    
+                res.json(results[0]); // 🔹 Retorna a questão encontrada
             }
         );
-    }
+    });
 
-    // Valida se os parâmetros foram enviados para a resposta do usuário
-    if (!idQuestao || !idUsuario || respostaUsuario === undefined) {
-        return res.status(400).json({ error: "Parâmetros ausentes." });
-    }
-
-    // Busca a resposta correta da questão
-    db.query(
-        "SELECT resposta FROM respostas WHERE id_questao = ?",
-        [idQuestao],
-        (err, answerResults) => {
+    app.post("/responderQuestao", (req, res) => {
+        const { idUsuario, idQuestao, respostaUsuario, pontos } = req.body;
+    
+        if (!idUsuario || !idQuestao || respostaUsuario === undefined) {
+            return res.status(400).json({ error: "Parâmetros ausentes ou inválidos." });
+        }
+    
+        // Busca a resposta correta da questão
+        db.query("SELECT resposta FROM respostas WHERE id_questao = ?", [idQuestao], (err, answerResults) => {
             if (err) {
                 console.error("Erro ao buscar resposta:", err);
-                return res.status(500).send("Erro no servidor");
+                return res.status(500).json({ error: "Erro no servidor" });
             }
-
+    
             if (answerResults.length === 0) {
                 return res.status(404).json({ error: "Respostas não encontradas para esta questão." });
             }
-
+    
             const respostaCorreta = answerResults[0].resposta;
-
-            // Se a resposta estiver errada mostra mensagem e resposta correta
+    
             if (respostaUsuario !== respostaCorreta) {
                 return res.status(400).json({
                     error: "Resposta incorreta.",
                     respostaCorreta: respostaCorreta,
                 });
             }
-
-            // Se a resposta estiver correta, adiciona 10 pontos ao usuário
-            db.query(
-                "UPDATE usuarios SET pontuacao = pontuacao + 10 WHERE id = ?",
-                [idUsuario],
-                (err) => {
-                    if (err) {
-                        console.error("Erro ao atualizar a pontuação:", err);
-                        return res.status(500).send("Erro no servidor");
-                    }
-
-                    res.json({ message: "Resposta Correta! Pontuação atualizada." });
+    
+            // Atualiza pontuação apenas se a resposta estiver correta
+            if (!pontos) {
+                return res.status(400).json({ error: "Pontos não informados!" });
+            }
+    
+            db.query("UPDATE usuarios SET pontuacao = pontuacao + ? WHERE id = ?", [pontos, idUsuario], (err) => {
+                if (err) {
+                    console.error("Erro ao atualizar pontuação:", err);
+                    return res.status(500).json({ error: "Erro no servidor." });
                 }
-            );
-        }
-    );
-});
-
-
+    
+                res.json({ message: "Pontuação atualizada com sucesso!" });
+            });
+        });
+    });
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);

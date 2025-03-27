@@ -1,58 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./perguntaAberta.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function PerguntaAberta() {
-  const [questao, setQuestao] = useState(null);
   const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [respostaCorreta, setRespostaCorreta] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    // 🔹 Requisição para buscar uma questão aleatória
-    fetch("http://localhost:5000/questaoAtual", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          setMensagem(data.error);
-        } else {
-          setQuestao(data);
-          setRespostaCorreta(null); // Reseta a resposta correta ao carregar nova questão
-          setMensagem(""); // Reseta a mensagem ao carregar nova questão
-        }
-      })
-      .catch((error) => console.error("Erro ao buscar questão:", error));
-  }, []);
+  const questao = location.state?.questao;
+  const idUsuario = location.state?.idUsuario || localStorage.getItem("usuarioId");
 
-  const enviarResposta = () => {
-    if (!questao) return;
+  console.log("ID do Usuário recebido:", idUsuario);
 
-    fetch("http://localhost:5000/questaoAtual", {
+  const enviarResposta = (pontosGanhos) => {
+    if (!questao) {
+      setMensagem("Erro: Nenhuma questão carregada!");
+      return;
+    }
+    if (!idUsuario) {
+      setMensagem("Erro: ID do usuário não encontrado!");
+      return;
+    }
+    if (!respostaUsuario.trim()) {
+      setMensagem("Digite uma resposta antes de enviar!");
+      return;
+    }
+  
+    fetch("http://localhost:5000/responderQuestao", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        respostaUsuario,
+        idUsuario,
         idQuestao: questao.id,
-        idUsuario: 2, // Defina o ID correto do usuário
-      }),
+        respostaUsuario,
+        pontos: pontosGanhos
+      })
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
           setMensagem(data.error);
           if (data.respostaCorreta) {
-            setRespostaCorreta(data.respostaCorreta); // Exibe a resposta correta
+            setRespostaCorreta(data.respostaCorreta);
           }
         } else {
           setMensagem(data.message);
-          setRespostaCorreta(null); // Se acertar, não exibe resposta correta
-        }
-      })
+          setRespostaCorreta(null);
+          setRespostaUsuario(""); // Limpa o input após o envio
+
+        // Atraso de 2 segundos antes de redirecionar para a próxima questão
+        setTimeout(() => {
+          // Envia os parâmetros necessários para a próxima questão
+          fetch("http://localhost:5000/questaoAtual", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idUsuario }),
+          })
+            .then((res) => res.json())
+            .then((nextQuestao) => {
+              // Redireciona para a página da próxima questão
+              navigate("/questaoAtual", { 
+                state: { 
+                  questao: nextQuestao, 
+                  idUsuario, 
+                }
+              });
+            })
+            .catch((error) => console.error("Erro ao buscar próxima questão:", error));
+        }, 5000); // 2000ms = 2 segundos
+      }
+    })
       .catch((error) => console.error("Erro ao enviar resposta:", error));
   };
+  
 
   return (
     <>
@@ -74,7 +97,7 @@ function PerguntaAberta() {
           value={respostaUsuario}
           onChange={(e) => setRespostaUsuario(e.target.value)}
         />
-        <button className="perguntaAberta-botaoEnviar" onClick={enviarResposta}>
+        <button className="perguntaAberta-botaoEnviar" onClick={() => enviarResposta(20)}>
           <p className="perguntaAberta-enviar">Enviar</p>
         </button>
       </div>
@@ -86,3 +109,10 @@ function PerguntaAberta() {
 }
 
 export default PerguntaAberta;
+
+
+
+
+  
+
+

@@ -7,6 +7,8 @@ import Config from "./public/font-awesome-4.7.0/css/font-awesome.min.css";
 
 function Comecar() {
   const [message, setMessage] = useState("Testando conexão...");
+  const [nome, setNome] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:5000/comecar")
@@ -15,9 +17,27 @@ function Comecar() {
       .catch((err) => setMessage("Erro ao conectar ao backend!"));
   }, []);
 
-  const navigate = useNavigate();
-    const iniciar = () => {
-      navigate('/questaoAtual'); 
+  const cadastrarUsuario = () => {
+    if (!nome.trim()) {
+      console.error("Nome não pode estar vazio!");
+      return;
+    }
+
+    fetch("http://localhost:5000/cadastrar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome }) 
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.id) {
+            console.log("Usuário cadastrado com ID:", data.id);
+            navigate('/questaoAtual', { state: { idUsuario: data.id } }); // Envia o ID para a página de questões
+        } else {
+            console.error("Erro ao cadastrar usuário:", data.error);
+        }
+    })
+      .catch((error) => console.error("Erro ao cadastrar:", error));
   };
 
   return (
@@ -26,7 +46,7 @@ function Comecar() {
         src={logo} className="nickname-logo-cachorro"
         alt="Cachorro pixelado"
       />
-      <i src={Config}  id="cog" className="fa fa-cog config"></i>
+      <i src={Config} id="cog" className="fa fa-cog config"></i>
       <div className="nickname-container">
         <div className="nickname-cinza_escuro">
           <div className="nickname-logo">
@@ -46,14 +66,16 @@ function Comecar() {
                 <div className="nickname-text-shadow2">edition</div>
               </div>
               <div className="nickname">
-                <form className="nickname-formulario">
+                <form className="nickname-formulario" onSubmit={(e) => e.preventDefault()}>
                   <input 
                     type="text" 
                     id="nick" 
                     name="nick" 
                     placeholder="Digite seu nome"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
                   />
-                  <button className="nickname-botaoIniciar">
+                  <button className="nickname-botaoIniciar" onClick={cadastrarUsuario}>
                     <p className="nickname-iniciar">Iniciar</p>
                   </button>
                 </form>
