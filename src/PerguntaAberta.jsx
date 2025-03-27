@@ -79,7 +79,8 @@ function PerguntaAberta() {
 
   return (
     <>
-      <div className="logo">
+    <div className="perguntaAberta-tudo">
+      <div className="perguntaAberta-logo">
         <img src={RaioIcone} className="perguntaAberta-icone-raio" alt="Ícone de Raio" />
         <span className="perguntaAberta-flashcards">FLASHCARDS</span>
       </div>
@@ -90,8 +91,9 @@ function PerguntaAberta() {
         </span>
       </div>
 
-      <div className="perguntaAberta-resposta">
+      <form className="perguntaAberta-resposta">
         <input
+          id="digite"
           type="text"
           placeholder="Digite a resposta"
           value={respostaUsuario}
@@ -100,10 +102,11 @@ function PerguntaAberta() {
         <button className="perguntaAberta-botaoEnviar" onClick={() => enviarResposta(20)}>
           <p className="perguntaAberta-enviar">Enviar</p>
         </button>
-      </div>
+      </form>
 
       {mensagem && <p>{mensagem}</p>}
       {respostaCorreta && <p><strong>Resposta correta:</strong> {respostaCorreta}</p>}
+      </div>
     </>
   );
 }
@@ -114,5 +117,4 @@ export default PerguntaAberta;
 
 
   
-
 
