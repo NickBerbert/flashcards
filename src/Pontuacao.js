@@ -46,7 +46,7 @@ function Pontuacao() {
                         />
                         <span className="melhores-pontuacoes">Melhores Pontuações:</span>
                     </div>
-                    <ol>
+                    <ol className="pontuacao-ranking">
                         {pontuacoes.length > 0 ? (
                             pontuacoes.map((usuario, index) => (
                                 <li key={index}>
