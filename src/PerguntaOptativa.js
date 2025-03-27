@@ -40,28 +40,45 @@ function PerguntaOptativa() {
 
   return (
     <>
-      <div className="perguntaOptativa-tudo">
-      <div className="perguntaOptativa-logo">
-        <img
-          className="perguntaOptativa-icone-raio"
-          src={RaioIcone}
-          alt="imagem-raio"
-        />
-        <div className="perguntaOptativa-logo-text">
-          <div className="perguntaOptativa-flashcards">FLASHCARDS</div>
-        </div>
-      </div>
-
-      <div className="perguntaOptativa-resposta">
-        <div className="perguntaOptativa-pergunta">
-          <span className="perguntaOptativa-pergunta1">Pergunta</span>
+        <div className="perguntaOptativa-tudo">
+        <div className="perguntaOptativa-logo">
+          <img
+            className="perguntaOptativa-icone-raio"
+            src={RaioIcone}
+            alt="imagem-raio"
+          />
+          <div className="perguntaOptativa-logo-text">
+            <div className="perguntaOptativa-flashcards">FLASHCARDS</div>
+          </div>
         </div>
 
-        <button className="botaoProxima">
-          <p className="proxima">Próxima</p>
-        </button>
+        <div className="perguntaOptativa-resposta">
+          <div className="perguntaOptativa-pergunta">
+            <span className="perguntaOptativa-pergunta1">Pergunta</span>
+          </div>
+
+          <button className="botaoProxima">
+            <p className="proxima">Próxima</p>
+          </button>
+        </div>
+
+        <div className="perguntaOptativa-alternativa">
+          <button className="perguntaOptativa-A">
+            <p> a) VFVV</p>
+          </button>
+          <button className="perguntaOptativa-B">
+            <p> b) FFVF</p>
+          </button>
+          <button className="perguntaOptativa-C">
+            <p> c) VFFV</p>
+          </button>
+          <button className="perguntaOptativa-D">
+            <p> d) FVFV</p>
+          </button>
+        </div>
+
+
       </div>
-    </div>
     </>
   );
 }
