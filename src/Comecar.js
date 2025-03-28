@@ -9,6 +9,7 @@ function Comecar() {
   const [message, setMessage] = useState("Testando conexão...");
   const [nome, setNome] = useState("");
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:5000/comecar")
@@ -46,7 +47,12 @@ function Comecar() {
         src={logo} className="nickname-logo-cachorro"
         alt="Cachorro pixelado"
       />
-      <i src={Config} id="cog" className="fa fa-cog config"></i>
+      {/* Ícone de Configuração */}
+      <i 
+	        id="cog" 
+	        className="fa fa-cog"
+	        onClick={() => setSidebarOpen(true)}
+	      ></i>
       <div className="nickname-container">
         <div className="nickname-cinza_escuro">
           <div className="nickname-logo">
@@ -84,6 +90,12 @@ function Comecar() {
           </div>
         </div>
       </div>
+             {/* Sidebar */}
+	       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+	        <button className="close-btn" onClick={() => setSidebarOpen(false)}>×</button>
+	        <p id="tela-inicial-som">Som</p>
+	        <p id="tela-inicial-musica">Música</p>
+	      </div>
     </>
   );
 }

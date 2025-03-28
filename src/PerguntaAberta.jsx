@@ -12,6 +12,7 @@ function PerguntaAberta() {
 
   const questao = location.state?.questao;
   const idUsuario = location.state?.idUsuario || localStorage.getItem("usuarioId");
+  let pontosAcumulados = location.state?.pontosAcumulados || 0; // Garantindo que os pontos acumulados começam com 0
 
   console.log("ID do Usuário recebido:", idUsuario);
 
@@ -28,7 +29,11 @@ function PerguntaAberta() {
       setMensagem("Digite uma resposta antes de enviar!");
       return;
     }
-  
+
+    // Atualiza a pontuação acumulada
+    pontosAcumulados += pontosGanhos;
+
+    // Enviar resposta do usuário
     fetch("http://localhost:5000/responderQuestao", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -36,8 +41,8 @@ function PerguntaAberta() {
         idUsuario,
         idQuestao: questao.id,
         respostaUsuario,
-        pontos: pontosGanhos
-      })
+        pontos: pontosAcumulados,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -47,39 +52,78 @@ function PerguntaAberta() {
             setRespostaCorreta(data.respostaCorreta);
           }
         } else {
-          setMensagem(data.message);
-          setRespostaCorreta(null);
-          setRespostaUsuario(""); // Limpa o input após o envio
+          setMensagem(data.message); // Mensagem de sucesso
+          setRespostaCorreta(null); // Limpar resposta correta
+          setRespostaUsuario(""); // Limpar input após o envio
 
-        // Atraso de 2 segundos antes de redirecionar para a próxima questão
-        setTimeout(() => {
-          // Envia os parâmetros necessários para a próxima questão
-          fetch("http://localhost:5000/questaoAtual", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ idUsuario }),
-          })
-            .then((res) => res.json())
-            .then((nextQuestao) => {
-              // Redireciona para a página da próxima questão
-              navigate("/questaoAtual", { 
-                state: { 
-                  questao: nextQuestao, 
-                  idUsuario, 
+          // Atraso de 10 segundos antes de redirecionar para a próxima questão
+          setTimeout(() => {
+            // Buscar a pontuação atual do usuário
+            fetch(`http://localhost:5000/getPontuacaoUsuario/${idUsuario}`)
+              .then((res) => res.json())
+              .then((usuarioData) => {
+                if (usuarioData.error) {
+                  setMensagem(usuarioData.error);
+                  return;
                 }
-              });
+
+                const pontuacaoAtual = usuarioData.pontuacao;
+
+                // Verifica se a pontuação acumulada é maior do que a pontuação no banco de dados
+                if (pontosAcumulados > pontuacaoAtual) {
+                  // Atualiza a pontuação no banco de dados
+                  fetch("http://localhost:5000/atualizarPontuacao", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      idUsuario,
+                      novaPontuacao: pontosAcumulados,
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then((updateData) => {
+                      if (updateData.error) {
+                        setMensagem(updateData.error);
+                      } else {
+                        setMensagem(updateData.message); // Mensagem de sucesso ao atualizar
+                      }
+                    })
+                    .catch((error) => console.error("Erro ao atualizar pontuação:", error));
+                } else {
+                  setMensagem("Os pontos acumulados não são maiores que a pontuação atual.");
+                }
+              })
+              .catch((error) => console.error("Erro ao buscar pontuação do usuário:", error));
+
+            // Redireciona para a próxima questão após o atraso
+            fetch("http://localhost:5000/questaoAtual", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ idUsuario, pontosAcumulados }),
             })
-            .catch((error) => console.error("Erro ao buscar próxima questão:", error));
-        }, 5000); // 2000ms = 2 segundos
-      }
-    })
+              .then((res) => res.json())
+              .then((nextQuestao) => {
+                // Redireciona para a página da próxima questão
+                navigate("/questaoAtual", {
+                  state: {
+                    questao: nextQuestao,
+                    idUsuario,
+                    pontosAcumulados,
+                  },
+                });
+              })
+              .catch((error) => console.error("Erro ao buscar próxima questão:", error));
+          }, 10000); // 10000ms = 10 segundos
+        }
+      })
       .catch((error) => console.error("Erro ao enviar resposta:", error));
   };
   
 
   return (
     <>
-      <div className="logo">
+      <div className="perguntaAberta-tudo">
+	      <div className="perguntaAberta-logo">
         <img src={RaioIcone} className="perguntaAberta-icone-raio" alt="Ícone de Raio" />
         <span className="perguntaAberta-flashcards">FLASHCARDS</span>
       </div>
@@ -92,6 +136,7 @@ function PerguntaAberta() {
 
       <div className="perguntaAberta-resposta">
         <input
+          id="digite"
           type="text"
           placeholder="Digite a resposta"
           value={respostaUsuario}
@@ -104,11 +149,14 @@ function PerguntaAberta() {
 
       {mensagem && <p>{mensagem}</p>}
       {respostaCorreta && <p><strong>Resposta correta:</strong> {respostaCorreta}</p>}
+      </div>
     </>
   );
 }
 
 export default PerguntaAberta;
+
+
 
 
 
