@@ -124,50 +124,103 @@ db.query("SELECT * FROM usuarios WHERE nome = ?", [nome], (err, results) => {
 
     app.post("/responderQuestao", (req, res) => {
         const { idUsuario, idQuestao, respostaUsuario, pontos } = req.body;
-    
+      
         if (!idUsuario || !idQuestao || respostaUsuario === undefined) {
-            return res.status(400).json({ error: "Parâmetros ausentes ou inválidos." });
+          return res.status(400).json({ error: "Parâmetros ausentes ou inválidos." });
         }
-    
-        // Busca a resposta correta da questão
+      
+        // Buscar a resposta correta da questão
         db.query("SELECT resposta FROM respostas WHERE id_questao = ?", [idQuestao], (err, answerResults) => {
-            if (err) {
-                console.error("Erro ao buscar resposta:", err);
-                return res.status(500).json({ error: "Erro no servidor" });
-            }
-    
-            if (answerResults.length === 0) {
-                return res.status(404).json({ error: "Respostas não encontradas para esta questão." });
-            }
-    
-            const respostaCorreta = answerResults[0].resposta;
-    
-            if (respostaUsuario !== respostaCorreta) {
-                return res.status(400).json({
-                    error: "Resposta incorreta.",
-                    respostaCorreta: respostaCorreta,
-                });
-            }
-    
-            // Atualiza pontuação apenas se a resposta estiver correta
-            if (!pontos) {
-                return res.status(400).json({ error: "Pontos não informados!" });
-            }
-    
-            db.query("UPDATE usuarios SET pontuacao = pontuacao + ? WHERE id = ?", [pontos, idUsuario], (err) => {
-                if (err) {
-                    console.error("Erro ao atualizar pontuação:", err);
-                    return res.status(500).json({ error: "Erro no servidor." });
-                }
-    
-                res.json({ message: "Pontuação atualizada com sucesso!" });
+          if (err) {
+            console.error("Erro ao buscar resposta:", err);
+            return res.status(500).json({ error: "Erro no servidor" });
+          }
+      
+          if (answerResults.length === 0) {
+            return res.status(404).json({ error: "Respostas não encontradas para esta questão." });
+          }
+      
+          const respostaCorreta = answerResults[0].resposta;
+      
+          // Verificar se a resposta do usuário está correta
+          if (respostaUsuario !== respostaCorreta) {
+            return res.status(400).json({
+              error: "Resposta incorreta.",
+              respostaCorreta: respostaCorreta,
             });
+          }
+      
+          // Buscar a pontuação atual do usuário no banco de dados
+          db.query("SELECT pontuacao FROM usuarios WHERE id = ?", [idUsuario], (err, userResults) => {
+            if (err) {
+              console.error("Erro ao buscar pontuação:", err);
+              return res.status(500).json({ error: "Erro no servidor" });
+            }
+      
+            if (userResults.length === 0) {
+              return res.status(404).json({ error: "Usuário não encontrado." });
+            }
+      
+            const pontuacaoAtual = userResults[0].pontuacao;
+      
+            // Verificar se os pontos acumulados são maiores do que a pontuação atual
+            if (pontos > pontuacaoAtual) {
+              // Atualizar a pontuação apenas se a nova pontuação for maior
+              db.query("UPDATE usuarios SET pontuacao = pontuacao + ? WHERE id = ?", [pontos, idUsuario], (err) => {
+                if (err) {
+                  console.error("Erro ao atualizar pontuação:", err);
+                  return res.status(500).json({ error: "Erro no servidor." });
+                }
+      
+                res.json({ message: "Pontuação atualizada com sucesso!" });
+              });
+            } else {
+                console.log("pontos: "+ pontos);
+              res.json({
+                message: "A pontuação acumulada não é maior que a pontuação atual, não foi atualizada.",
+              });
+            }
+          });
         });
-    });
+      });
+      
+
+    app.get('/getPontuacaoUsuario/:id', (req, res) => {
+        const { id } = req.params;
+      
+        db.query('SELECT pontuacao FROM usuarios WHERE id = ?', [id], (err, results) => {
+          if (err) {
+            console.error('Erro ao buscar pontuação:', err);
+            return res.status(500).json({ error: 'Erro no servidor.' });
+          }
+      
+          if (results.length === 0) {
+            return res.status(404).json({ error: 'Usuário não encontrado.' });
+          }
+      
+          res.json({ pontuacao: results[0].pontuacao });
+        });
+      });
+
+      app.post('/atualizarPontuacao', (req, res) => {
+        const { idUsuario, novaPontuacao } = req.body;
+      
+        db.query('UPDATE usuarios SET pontuacao = ? WHERE id = ?', [novaPontuacao, idUsuario], (err) => {
+          if (err) {
+            console.error('Erro ao atualizar pontuação:', err);
+            return res.status(500).json({ error: 'Erro no servidor.' });
+          }
+      
+          res.json({ message: 'Pontuação atualizada com sucesso!' });
+        });
+      });
+      
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
 module.exports = app;
+
+
 

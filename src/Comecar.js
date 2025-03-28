@@ -56,6 +56,12 @@ function Comecar() {
         onClick={() => setSidebarOpen(true)}
       ></i>
 
+      {/* Ícone de Configuração */}
+      <i 
+	        id="cog" 
+	        className="fa fa-cog"
+	        onClick={() => setSidebarOpen(true)}
+	      ></i>
       <div className="nickname-container">
         <div className="nickname-cinza_escuro">
           <div className="nickname-logo">
@@ -101,6 +107,12 @@ function Comecar() {
         <p id="tela-inicial-musica">Música</p>
       </div>
 
+             {/* Sidebar */}
+	       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+	        <button className="close-btn" onClick={() => setSidebarOpen(false)}>×</button>
+	        <p id="tela-inicial-som">Som</p>
+	        <p id="tela-inicial-musica">Música</p>
+	      </div>
     </>
   );
 }
