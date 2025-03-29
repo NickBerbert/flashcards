@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./perguntaOptativa.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
 import { useNavigate, useLocation } from "react-router-dom";
+import { TimerContext } from './TimerContext';
 
 function PerguntaOptativa() {
+  const { tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp } = useContext(TimerContext);
   const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [respostaCorreta, setRespostaCorreta] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const [alternativa1, setAlternativa1] = useState(null)
+  const [alternativa2, setAlternativa2] = useState(null)
+  const [alternativa3, setAlternativa3] = useState(null)
+  const [alternativa4, setAlternativa4] = useState(null)
 
   const questao = location.state?.questao;
   const idUsuario = location.state?.idUsuario || localStorage.getItem("usuarioId");
@@ -16,6 +22,102 @@ function PerguntaOptativa() {
 
   console.log("ID do Usuário recebido:", idUsuario);
 
+  const idQuestao = location.state?.idQuestao;
+  console.log("idQuestao no PerguntaOptativa:", idQuestao);  // Certifique-se de que está sendo acessado corretamente
+
+  useEffect(() => {
+    // Fetch para obter a alternativa 1
+    fetch("http://localhost:5000/alternativa1", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idQuestao }),
+    })
+      .then((res) => res.json()) // Converter resposta para JSON
+      .then((data) => {
+        console.log("Dados recebidos:", data); // Verifique os dados que estão sendo retornados
+        if (data.error) {
+          setMensagem(data.error);
+        } else {
+          setAlternativa1(data); // Atualizar o estado com os dados da alternativa 1
+          setMensagem(""); // Limpa a mensagem de erro caso tenha sucesso
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar alternativa:", error);
+        setMensagem("Erro ao carregar a alternativa.");
+      });
+  }, [idQuestao]);
+  
+  useEffect(() => {
+    // Fetch para obter a alternativa 2
+    fetch("http://localhost:5000/alternativa2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idQuestao }),
+    })
+      .then((res) => res.json()) // Converter resposta para JSON
+      .then((data) => {
+        console.log("Dados recebidos:", data); // Verifique os dados que estão sendo retornados
+        if (data.error) {
+          setMensagem(data.error);
+        } else {
+          setAlternativa2(data); // Atualizar o estado com os dados da alternativa 2
+          setMensagem(""); // Limpa a mensagem de erro caso tenha sucesso
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar alternativa:", error);
+        setMensagem("Erro ao carregar a alternativa.");
+      });
+  }, [idQuestao]);
+  
+  useEffect(() => {
+    // Fetch para obter a alternativa 3
+    fetch("http://localhost:5000/alternativa3", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idQuestao }),
+    })
+      .then((res) => res.json()) // Converter resposta para JSON
+      .then((data) => {
+        console.log("Dados recebidos:", data); // Verifique os dados que estão sendo retornados
+        if (data.error) {
+          setMensagem(data.error);
+        } else {
+          setAlternativa3(data); // Atualizar o estado com os dados da alternativa 3
+          setMensagem(""); // Limpa a mensagem de erro caso tenha sucesso
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar alternativa:", error);
+        setMensagem("Erro ao carregar a alternativa.");
+      });
+  }, [idQuestao]);
+  
+  useEffect(() => {
+    // Fetch para obter a alternativa 4
+    fetch("http://localhost:5000/alternativa4", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idQuestao }),
+    })
+      .then((res) => res.json()) // Converter resposta para JSON
+      .then((data) => {
+        console.log("Dados recebidos:", data); // Verifique os dados que estão sendo retornados
+        if (data.error) {
+          setMensagem(data.error);
+        } else {
+          setAlternativa4(data); // Atualizar o estado com os dados da alternativa 4
+          setMensagem(""); // Limpa a mensagem de erro caso tenha sucesso
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar alternativa:", error);
+        setMensagem("Erro ao carregar a alternativa.");
+      });
+  }, [idQuestao]);
+
+  // Função para enviar a resposta ao clicar em uma alternativa
   const enviarResposta = (pontosGanhos) => {
     if (!questao) {
       setMensagem("Erro: Nenhuma questão carregada!");
@@ -31,7 +133,7 @@ function PerguntaOptativa() {
     pontosAcumulados += pontosGanhos;
 
     // Enviar resposta do usuário
-    fetch("http://localhost:5000/responderQuestao", {
+    fetch("http://localhost:5000/responderQuestaoOptativa", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -110,13 +212,15 @@ function PerguntaOptativa() {
                 });
               })
               .catch((error) => console.error("Erro ao buscar próxima questão:", error));
-          }, 10000); // 10000ms = 10 segundos
+          }, 2000); // 10000ms = 10 segundos
         }
       })
       .catch((error) => console.error("Erro ao enviar resposta:", error));
+      console.log(alternativa1);
   };
   return (
     <>
+    <p>Tempo restante: {tempoRestante}s</p>
         <div className="perguntaOptativa-tudo">
         <div className="perguntaOptativa-logo">
           <img
@@ -131,27 +235,61 @@ function PerguntaOptativa() {
 
         <div className="perguntaOptativa-resposta">
           <div className="perguntaOptativa-pergunta">
-            <span className="perguntaOptativa-pergunta1">Pergunta</span>
+            <span className="perguntaOptativa-pergunta1">
+            {questao ? questao.enunciado : "Carregando questão..."}
+            </span>
           </div>
 
           <button className="botaoProxima">
             <p className="proxima">Próxima</p>
           </button>
         </div>
-
+        
         <div className="perguntaOptativa-alternativa">
-          <button className="perguntaOptativa-A" onClick={() => enviarResposta(20)}>
-            <p> a) VFVV</p>
-          </button>
-          <button className="perguntaOptativa-B" onClick={() => enviarResposta(20)}>
-            <p> b) FFVF</p>
-          </button>
-          <button className="perguntaOptativa-C" onClick={() => enviarResposta(20)}>
-            <p> c) VFFV</p>
-          </button>
-          <button className="perguntaOptativa-D" onClick={() => enviarResposta(20)}>
-            <p> d) FVFV</p>
-          </button>
+        <button 
+  className="perguntaOptativa-A" 
+  onClick={() => {
+    setRespostaUsuario(alternativa1?.resposta); // Atualiza a resposta selecionada
+    enviarResposta(10); // Chama a função para enviar a resposta
+  }}
+>
+  <p> 
+    {alternativa1 ? alternativa1.resposta : "Carregando alternativa..."}
+  </p>
+</button>
+<button 
+  className="perguntaOptativa-B" 
+  onClick={() => {
+    setRespostaUsuario(alternativa2?.resposta); // Atualiza a resposta selecionada
+    enviarResposta(10); // Chama a função para enviar a resposta
+  }}
+>
+  <p> 
+    {alternativa2 ? alternativa2.resposta : "Carregando alternativa..."}
+  </p>
+</button>
+<button 
+  className="perguntaOptativa-C" 
+  onClick={() => {
+    setRespostaUsuario(alternativa3?.resposta); // Atualiza a resposta selecionada
+    enviarResposta(10); // Chama a função para enviar a resposta
+  }}
+>
+  <p> 
+    {alternativa3 ? alternativa3.resposta : "Carregando alternativa..."}
+  </p>
+</button>
+<button 
+  className="perguntaOptativa-D" 
+  onClick={() => {
+    setRespostaUsuario(alternativa4?.resposta); // Atualiza a resposta selecionada
+    enviarResposta(10); // Chama a função para enviar a resposta
+  }}
+>
+  <p> 
+    {alternativa4 ? alternativa4.resposta : "Carregando alternativa..."}
+  </p>
+</button>
         </div>
 
 
