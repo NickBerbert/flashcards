@@ -110,7 +110,8 @@ Sobre o operador "instanceof" em Java, marque V para as afirmativas verdadeiras 
 
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFV', TRUE, 8);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 8);
-INST INTO respostas (resposta, correta, id_questao) VALUES ('FFFF', FALSE, 8);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 8);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFFF', FALSE, 8);
 
 INSERT INTO questoes (enunciado, tipo) VALUES ('Escreva um código em Java que imprima os números de 1 a 5.', 'aberta');
 
@@ -128,10 +129,5 @@ Sobre encapsulamento em Java, marque V para as afirmativas verdadeiras e F para 
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVVF', TRUE, 10);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 10);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VFFF', FALSE, 10);
-INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 10);ERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 8);
-
-
-
-
-
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 10);
 
