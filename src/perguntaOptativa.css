@@ -63,21 +63,27 @@ body {
 .perguntaOptativa-A:hover {
     background-color: #FFD302;
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 .perguntaOptativa-B:hover {
     background-color: #FFD302;
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 .perguntaOptativa-C:hover {
     background-color: #FFD302;
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 .perguntaOptativa-D:hover {
     background-color: #FFD302;
     transform: scale(1.05);
+    cursor: pointer;
 }
+
+
     
 
