@@ -47,7 +47,6 @@ VALUES ('Declare uma variável chamada numero inteira em java com o valor 10!', 
 INSERT INTO respostas (resposta, correta, id_questao) 
 VALUES ('int numero = 10;', TRUE, 2);
 
--- Questão 3: Palavra-chave static (optativa)
 INSERT INTO questoes (enunciado, tipo) 
 VALUES ('
 Sobre a palavra-chave "static" em Java, marque V para as afirmativas verdadeiras e F para as falsas:
@@ -62,14 +61,12 @@ INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 3);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 3);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFFF', FALSE, 3);
 
--- Questão 4: Método que soma dois números (aberta)
 INSERT INTO questoes (enunciado, tipo) 
 VALUES ('Escreva um método em Java que retorne a soma de dois números inteiros.', 'aberta');
 
 INSERT INTO respostas (resposta, correta, id_questao) 
 VALUES ('public int soma(int a, int b) { return a + b; }', TRUE, 4);
 
--- Questão 5: Tratamento de exceções (optativa)
 INSERT INTO questoes (enunciado, tipo) 
 VALUES ('
 Sobre tratamento de exceções em Java, marque V para as afirmativas verdadeiras e F para as falsas:
@@ -84,14 +81,12 @@ INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 5);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VFFF', FALSE, 5);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 5);
 
--- Questão 6: Declaração de array (aberta)
 INSERT INTO questoes (enunciado, tipo) 
 VALUES ('Declare um array de inteiros em Java com 5 posições.', 'aberta');
 
 INSERT INTO respostas (resposta, correta, id_questao) 
 VALUES ('int[] array = new int[5];', TRUE, 6);
 
--- Questão 7: Herança em Java (optativa)
 INSERT INTO questoes (enunciado, tipo) VALUES ('
 Sobre a herança em Java, marque V para as afirmativas verdadeiras e F para as falsas:
 ( ) Em Java, uma classe pode estender somente uma única classe.
@@ -105,7 +100,6 @@ INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 7);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFFF', FALSE, 7);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVVV', FALSE, 7);
 
--- Questão 8: Operador instanceof (optativa)
 INSERT INTO questoes (enunciado, tipo) VALUES ('
 Sobre o operador "instanceof" em Java, marque V para as afirmativas verdadeiras e F para as falsas:
 ( ) O operador "instanceof" é utilizado para verificar se um objeto é instância de uma determinada classe ou interface.
@@ -119,13 +113,11 @@ INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 8);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 8);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFFF', FALSE, 8);
 
--- Questão 9: Estrutura de repetição (aberta)
 INSERT INTO questoes (enunciado, tipo) VALUES ('Escreva um código em Java que imprima os números de 1 a 5.', 'aberta');
 
 INSERT INTO respostas (resposta, correta, id_questao) 
 VALUES ('for (int i = 1; i <= 5; i++) { System.out.println(i); }', TRUE, 9);
 
--- Questão 10: Encapsulamento em Java (optativa)
 INSERT INTO questoes (enunciado, tipo) VALUES ('
 Sobre encapsulamento em Java, marque V para as afirmativas verdadeiras e F para as falsas:
 ( ) O encapsulamento permite restringir o acesso direto a alguns dos componentes do objeto.
@@ -138,9 +130,4 @@ INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVVF', TRUE, 10);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 10);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VFFF', FALSE, 10);
 INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 10);
-
-
-
-
-
 
