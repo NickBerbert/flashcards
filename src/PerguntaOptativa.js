@@ -291,9 +291,8 @@ function PerguntaOptativa() {
   </p>
 </button>
         </div>
+        </div>
 
-
-      </div>
       {mensagem && <p>{mensagem}</p>}
       {respostaCorreta && <p><strong>Resposta correta:</strong> {respostaCorreta}</p>}
     </>

@@ -11,6 +11,7 @@ function Comecar() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+
   useEffect(() => {
     fetch("http://localhost:5000/comecar")
       .then((res) => res.json())
@@ -47,6 +48,14 @@ function Comecar() {
         src={logo} className="nickname-logo-cachorro"
         alt="Cachorro pixelado"
       />
+
+      {/* Ícone de Configuração */}
+      <i 
+        id="cog" 
+        className="fa fa-cog"
+        onClick={() => setSidebarOpen(true)}
+      ></i>
+
       {/* Ícone de Configuração */}
       <i 
 	        id="cog" 
@@ -90,6 +99,14 @@ function Comecar() {
           </div>
         </div>
       </div>
+
+       {/* Sidebar */}
+       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+        <button className="close-btn" onClick={() => setSidebarOpen(false)}>×</button>
+        <p id="tela-inicial-som">Som</p>
+        <p id="tela-inicial-musica">Música</p>
+      </div>
+
              {/* Sidebar */}
 	       <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
 	        <button className="close-btn" onClick={() => setSidebarOpen(false)}>×</button>

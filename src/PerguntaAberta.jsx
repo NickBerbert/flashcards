@@ -134,7 +134,7 @@ function PerguntaAberta() {
         </span>
       </div>
 
-      <div className="perguntaAberta-resposta">
+      <form className="perguntaAberta-resposta">
         <input
           id="digite"
           type="text"
@@ -145,7 +145,7 @@ function PerguntaAberta() {
         <button className="perguntaAberta-botaoEnviar" onClick={() => enviarResposta(20)}>
           <p className="perguntaAberta-enviar">Enviar</p>
         </button>
-      </div>
+      </form>
 
       {mensagem && <p>{mensagem}</p>}
       {respostaCorreta && <p><strong>Resposta correta:</strong> {respostaCorreta}</p>}
@@ -162,5 +162,4 @@ export default PerguntaAberta;
 
 
   
-
 
