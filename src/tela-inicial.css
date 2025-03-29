@@ -10,12 +10,11 @@ body {
     margin: 0;
 }
 
-img{
+img {
     position: absolute;
     width: 150px;
     height: 150px;
     top: 45px;
-    
 }
 
 .telaInicial-cinza_escuro {
@@ -40,13 +39,38 @@ img{
     align-items: center;
 }
 
-#cog  {
+#cog {
     position: absolute;
     top: 20px;
     right: 20px;
     font-size: 24px;
     color: white;
     cursor: pointer;
+}
+
+.player-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.player-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+input[type="range"] {
+    width: 100px;
 }
 
 /* Sidebar */
@@ -68,7 +92,6 @@ img{
     gap: 15px;
 }
 
-
 .sidebar.open {
     right: 0; /* Sidebar aparece ao adicionar a classe "open" */
 }
@@ -83,6 +106,55 @@ img{
     align-self: flex-end;
 }
 
+/* Estilo do botão Música */
+#tela-inicial-musica {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    background: #222;
+    transition: background 0.2s ease-in-out;
+}
+
+#tela-inicial-musica:hover {
+    background: #666;
+}
+
+/* Player de música */
+.player-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-button {
+    background-color: black;
+    border: none;
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.player-button:hover {
+    background-color: #666;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Texto e botões na Sidebar */
 .sidebar p {
     margin: 10px 0;
     cursor: pointer;
@@ -94,7 +166,6 @@ img{
 .sidebar p:hover {
     background: #666;
 }
-
 
 .telaInicial-icone-raio {
     position: absolute;
@@ -150,7 +221,7 @@ img{
     z-index: 1;
 }
 
-.telaInicial-edition-wrapper{
+.telaInicial-edition-wrapper {
     margin-top: -5px;
 }
 
