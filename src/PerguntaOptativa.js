@@ -239,10 +239,6 @@ function PerguntaOptativa() {
             {questao ? questao.enunciado : "Carregando questão..."}
             </span>
           </div>
-
-          <button className="botaoProxima">
-            <p className="proxima">Próxima</p>
-          </button>
         </div>
         
         <div className="perguntaOptativa-alternativa">
@@ -253,7 +249,7 @@ function PerguntaOptativa() {
     enviarResposta(10); // Chama a função para enviar a resposta
   }}
 >
-  <p> 
+  <p id="A"> 
     {alternativa1 ? alternativa1.resposta : "Carregando alternativa..."}
   </p>
 </button>
@@ -264,7 +260,7 @@ function PerguntaOptativa() {
     enviarResposta(10); // Chama a função para enviar a resposta
   }}
 >
-  <p> 
+  <p id="B"> 
     {alternativa2 ? alternativa2.resposta : "Carregando alternativa..."}
   </p>
 </button>
@@ -275,7 +271,7 @@ function PerguntaOptativa() {
     enviarResposta(10); // Chama a função para enviar a resposta
   }}
 >
-  <p> 
+  <p id="C"> 
     {alternativa3 ? alternativa3.resposta : "Carregando alternativa..."}
   </p>
 </button>
@@ -286,7 +282,7 @@ function PerguntaOptativa() {
     enviarResposta(10); // Chama a função para enviar a resposta
   }}
 >
-  <p> 
+  <p id="D"> 
     {alternativa4 ? alternativa4.resposta : "Carregando alternativa..."}
   </p>
 </button>

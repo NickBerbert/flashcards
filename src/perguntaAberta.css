@@ -96,3 +96,7 @@ body{
     background-color: #4FA3A9;
     transform: scale(1.05);
 }
+
+#respostaCorreta{
+    color: #23ef23;
+}

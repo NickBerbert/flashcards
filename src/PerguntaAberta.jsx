@@ -148,7 +148,7 @@ function PerguntaAberta() {
       </div>
 
       {mensagem && <p>{mensagem}</p>}
-      {respostaCorreta && <p><strong>Resposta correta:</strong> {respostaCorreta}</p>}
+      {respostaCorreta && <p id="respostaCorreta"><u>Resposta correta:</u> {respostaCorreta}</p>}
       </div>
     </>
   );
