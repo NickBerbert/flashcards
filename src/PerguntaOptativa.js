@@ -134,25 +134,27 @@ function PerguntaOptativa() {
             <span className="perguntaOptativa-pergunta1">Pergunta</span>
           </div>
 
+          <div className="perguntaOptativa-alternativa">
+          <button className="perguntaOptativa-A" onClick={() => enviarResposta(20)}>
+            <p id="A"> a) VFVV</p>
+          </button>
+          <button className="perguntaOptativa-B" onClick={() => enviarResposta(20)}>
+            <p id="B"> b) FFVF</p>
+          </button>
+          <button className="perguntaOptativa-C" onClick={() => enviarResposta(20)}>
+            <p id="C"> c) VFFV</p>
+          </button>
+          <button className="perguntaOptativa-D" onClick={() => enviarResposta(20)}>
+            <p id="D"> d) FVFV</p>
+          </button>
+        </div>
+
           <button className="botaoProxima">
             <p className="proxima">Próxima</p>
           </button>
         </div>
 
-        <div className="perguntaOptativa-alternativa">
-          <button className="perguntaOptativa-A" onClick={() => enviarResposta(20)}>
-            <p> a) VFVV</p>
-          </button>
-          <button className="perguntaOptativa-B" onClick={() => enviarResposta(20)}>
-            <p> b) FFVF</p>
-          </button>
-          <button className="perguntaOptativa-C" onClick={() => enviarResposta(20)}>
-            <p> c) VFFV</p>
-          </button>
-          <button className="perguntaOptativa-D" onClick={() => enviarResposta(20)}>
-            <p> d) FVFV</p>
-          </button>
-        </div>
+       
 
 
       </div>
