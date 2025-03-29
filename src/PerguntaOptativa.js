@@ -117,6 +117,15 @@ function PerguntaOptativa() {
       });
   }, [idQuestao]);
 
+    useEffect(() => {
+      console.log("Tempo acabou: ", isTimeUp)
+      if (isTimeUp) {
+        alert("O tempo acabou!");
+        // Realiza o redirecionamento ou qualquer ação quando o tempo acabar
+        navigate('/pontuacao');  // Exemplo de redirecionamento após o tempo acabar
+      }
+    }, [isTimeUp, navigate]);
+
   // Função para enviar a resposta ao clicar em uma alternativa
   const enviarResposta = (pontosGanhos) => {
     if (!questao) {

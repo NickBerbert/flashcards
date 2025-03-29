@@ -10,6 +10,7 @@ function Questao() {
   const location = useLocation();
 
   useEffect(() => {
+    console.log("Tempo acabou: ", isTimeUp)
     if (isTimeUp) {
       alert("O tempo acabou!");
       // Realiza o redirecionamento ou qualquer ação quando o tempo acabar

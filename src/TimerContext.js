@@ -13,17 +13,22 @@ export const TimerProvider = ({ children }) => {
 
     const timer = setInterval(() => {
       setTempoRestante((prevTempo) => {
-        if (prevTempo <= 0) {
-          clearInterval(timer);
+        console.log("PrevTempo: ", prevTempo)
+        if (prevTempo === 1) {
+          console.log("Chegou a 1")
           setIsTimeUp(true);  // Marca o tempo como esgotado
+          prevTempo = 10
+          clearInterval(timer);
+          
           return 0;
         }
         return prevTempo - 1;
       });
     }, 1000);
+    console.log("TimerContext: ", isTimeUp)
 
     return () => clearInterval(timer);  // Limpa o timer quando o componente for desmontado
-  }, [tempoRestante]);
+  }, [isTimeUp, tempoRestante]);
 
   return (
     <TimerContext.Provider value={{ tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp }}>

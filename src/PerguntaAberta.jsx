@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import "./perguntaAberta.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
 import { useNavigate, useLocation } from "react-router-dom";
+import { TimerContext } from './TimerContext';
 
 function PerguntaAberta() {
+  const { tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp } = useContext(TimerContext);
   const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [respostaCorreta, setRespostaCorreta] = useState(null);
@@ -15,6 +17,15 @@ function PerguntaAberta() {
   let pontosAcumulados = location.state?.pontosAcumulados || 0; // Garantindo que os pontos acumulados começam com 0
 
   console.log("ID do Usuário recebido:", idUsuario);
+
+    useEffect(() => {
+      console.log("Tempo acabou: ", isTimeUp)
+      if (isTimeUp) {
+        alert("O tempo acabou!");
+        // Realiza o redirecionamento ou qualquer ação quando o tempo acabar
+        navigate('/pontuacao');  // Exemplo de redirecionamento após o tempo acabar
+      }
+    }, [isTimeUp, navigate]);
 
   const enviarResposta = (pontosGanhos) => {
     if (!questao) {
@@ -122,6 +133,7 @@ function PerguntaAberta() {
 
   return (
     <>
+    <p>Tempo restante: {tempoRestante}s</p>
       <div className="perguntaAberta-tudo">
 	      <div className="perguntaAberta-logo">
         <img src={RaioIcone} className="perguntaAberta-icone-raio" alt="Ícone de Raio" />
