@@ -113,7 +113,7 @@ function PerguntaAberta() {
                 });
               })
               .catch((error) => console.error("Erro ao buscar próxima questão:", error));
-          }, 10000); // 10000ms = 10 segundos
+          }, 2000); // 10000ms = 10 segundos
         }
       })
       .catch((error) => console.error("Erro ao enviar resposta:", error));

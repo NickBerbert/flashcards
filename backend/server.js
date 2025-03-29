@@ -122,6 +122,118 @@ db.query("SELECT * FROM usuarios WHERE nome = ?", [nome], (err, results) => {
         );
     });
 
+    app.post("/alternativa1", (req, res) => {
+      const { idQuestao } = req.body;
+
+        // Aqui, você pode colocar outro console.log para ver o que o backend está recebendo
+  console.log('idQuestao:', idQuestao);
+  
+      if (!idQuestao) {
+          return res.status(400).json({ error: "ID da questão não informado!" });
+      }
+  
+      // Passando o parâmetro corretamente na consulta
+      db.query(
+          "SELECT resposta FROM respostas WHERE id_questao = ?",
+          [idQuestao], // Certificando-se de que o valor de id_questao seja passado aqui
+          (err, results) => {
+              if (err) {
+                  console.error("Erro ao buscar alternativa:", err);
+                  return res.status(500).json({ error: "Erro no servidor" });
+              }
+  
+              if (results.length === 0) {
+                  return res.status(404).json({ error: "Nenhuma alternativa encontrada." });
+              }
+  
+              res.json(results[0]); // Retorna todas as alternativas encontradas
+          }
+      );
+      console.log("ID da questão: ", idQuestao);
+  });
+    
+
+  app.post("/alternativa2", (req, res) => {
+    const { idQuestao } = req.body;
+
+    if (!idQuestao) {
+        return res.status(400).json({ error: "ID da questão não informado!" });
+    }
+
+    // Passando o parâmetro corretamente na consulta
+    db.query(
+        "SELECT resposta FROM respostas WHERE id_questao = ?",
+        [idQuestao], // Certificando-se de que o valor de id_questao seja passado aqui
+        (err, results) => {
+            if (err) {
+                console.error("Erro ao buscar alternativa:", err);
+                return res.status(500).json({ error: "Erro no servidor" });
+            }
+
+            if (results.length === 0) {
+                return res.status(404).json({ error: "Nenhuma alternativa encontrada." });
+            }
+
+            res.json(results[1]); // Retorna todas as alternativas encontradas
+        }
+    );
+    console.log("ID da questão: ", idQuestao);
+});
+  
+app.post("/alternativa3", (req, res) => {
+  const { idQuestao } = req.body;
+
+  if (!idQuestao) {
+      return res.status(400).json({ error: "ID da questão não informado!" });
+  }
+
+  // Passando o parâmetro corretamente na consulta
+  db.query(
+      "SELECT resposta FROM respostas WHERE id_questao = ?",
+      [idQuestao], // Certificando-se de que o valor de id_questao seja passado aqui
+      (err, results) => {
+          if (err) {
+              console.error("Erro ao buscar alternativa:", err);
+              return res.status(500).json({ error: "Erro no servidor" });
+          }
+
+          if (results.length === 0) {
+              return res.status(404).json({ error: "Nenhuma alternativa encontrada." });
+          }
+
+          res.json(results[2]); // Retorna todas as alternativas encontradas
+      }
+  );
+  console.log("ID da questão: ", idQuestao);
+});
+
+app.post("/alternativa4", (req, res) => {
+  const { idQuestao } = req.body;
+
+  if (!idQuestao) {
+      return res.status(400).json({ error: "ID da questão não informado!" });
+  }
+
+  // Passando o parâmetro corretamente na consulta
+  db.query(
+      "SELECT resposta FROM respostas WHERE id_questao = ?",
+      [idQuestao], // Certificando-se de que o valor de id_questao seja passado aqui
+      (err, results) => {
+          if (err) {
+              console.error("Erro ao buscar alternativa:", err);
+              return res.status(500).json({ error: "Erro no servidor" });
+          }
+
+          if (results.length === 0) {
+              return res.status(404).json({ error: "Nenhuma alternativa encontrada." });
+          }
+
+          res.json(results[3]); // Retorna todas as alternativas encontradas
+      }
+  );
+  console.log("ID da questão: ", idQuestao);
+});
+
     app.post("/responderQuestao", (req, res) => {
         const { idUsuario, idQuestao, respostaUsuario, pontos } = req.body;
       
@@ -166,7 +278,7 @@ db.query("SELECT * FROM usuarios WHERE nome = ?", [nome], (err, results) => {
             // Verificar se os pontos acumulados são maiores do que a pontuação atual
             if (pontos > pontuacaoAtual) {
               // Atualizar a pontuação apenas se a nova pontuação for maior
-              db.query("UPDATE usuarios SET pontuacao = pontuacao + ? WHERE id = ?", [pontos, idUsuario], (err) => {
+              db.query("UPDATE usuarios SET pontuacao = ? WHERE id = ?", [pontos, idUsuario], (err) => {
                 if (err) {
                   console.error("Erro ao atualizar pontuação:", err);
                   return res.status(500).json({ error: "Erro no servidor." });
@@ -184,6 +296,67 @@ db.query("SELECT * FROM usuarios WHERE nome = ?", [nome], (err, results) => {
         });
       });
       
+      app.post("/responderQuestaoOptativa", (req, res) => {
+        const { idUsuario, idQuestao, respostaUsuario, pontos } = req.body;
+      
+        if (!idUsuario || !idQuestao || respostaUsuario === undefined) {
+          return res.status(400).json({ error: "Parâmetros ausentes ou inválidos." });
+        }
+      
+        // Buscar a resposta correta da questão
+        db.query("SELECT resposta FROM respostas WHERE id_questao = ? AND correta = true", [idQuestao], (err, answerResults) => {
+          if (err) {
+            console.error("Erro ao buscar resposta:", err);
+            return res.status(500).json({ error: "Erro no servidor" });
+          }
+      
+          if (answerResults.length === 0) {
+            return res.status(404).json({ error: "Respostas não encontradas para esta questão." });
+          }
+      
+          const respostaCorreta = answerResults[0].resposta;
+      
+          // Verificar se a resposta do usuário está correta
+          if (respostaUsuario !== respostaCorreta) {
+            return res.status(400).json({
+              error: "Resposta incorreta.",
+              respostaCorreta: respostaCorreta,
+            });
+          }
+      
+          // Buscar a pontuação atual do usuário no banco de dados
+          db.query("SELECT pontuacao FROM usuarios WHERE id = ?", [idUsuario], (err, userResults) => {
+            if (err) {
+              console.error("Erro ao buscar pontuação:", err);
+              return res.status(500).json({ error: "Erro no servidor" });
+            }
+      
+            if (userResults.length === 0) {
+              return res.status(404).json({ error: "Usuário não encontrado." });
+            }
+      
+            const pontuacaoAtual = userResults[0].pontuacao;
+      
+            // Verificar se os pontos acumulados são maiores do que a pontuação atual
+            if (pontos > pontuacaoAtual) {
+              // Atualizar a pontuação apenas se a nova pontuação for maior
+              db.query("UPDATE usuarios SET pontuacao = ? WHERE id = ?", [pontos, idUsuario], (err) => {
+                if (err) {
+                  console.error("Erro ao atualizar pontuação:", err);
+                  return res.status(500).json({ error: "Erro no servidor." });
+                }
+      
+                res.json({ message: "Pontuação atualizada com sucesso!" });
+              });
+            } else {
+                console.log("pontos: "+ pontos);
+              res.json({
+                message: "A pontuação acumulada não é maior que a pontuação atual, não foi atualizada.",
+              });
+            }
+          });
+        });
+      });
 
     app.get('/getPontuacaoUsuario/:id', (req, res) => {
         const { id } = req.params;
