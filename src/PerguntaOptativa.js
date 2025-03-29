@@ -149,9 +149,7 @@ function PerguntaOptativa() {
           </button>
         </div>
 
-          <button className="botaoProxima">
-            <p className="proxima">Próxima</p>
-          </button>
+    
         </div>
 
        
