@@ -13,10 +13,11 @@ body {
     display: flex;
     justify-content: center;
     background-color: #FFD302;
-    padding: 30px 0;
+    padding: 20px;
     margin-top: 0px;
     font-size: 30px;
     width: 100%; /* Usa 100% ao invés de 100vw */
+    height: 200px;
 }
 
 .perguntaOptativa-tudo{
