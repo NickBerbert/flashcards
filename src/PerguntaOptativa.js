@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import "./perguntaOptativa.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
 import { useNavigate, useLocation } from "react-router-dom";
-import { TimerContext } from './TimerContext';
+import { useTimer } from './TimerContext';
 
 function PerguntaOptativa() {
-  const { tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp } = useContext(TimerContext);
+  const { tempoRestante, isTimeUp } = useTimer();
   const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [respostaCorreta, setRespostaCorreta] = useState(null);
@@ -117,14 +117,12 @@ function PerguntaOptativa() {
       });
   }, [idQuestao]);
 
-    useEffect(() => {
-      console.log("Tempo acabou: ", isTimeUp)
-      if (isTimeUp) {
-        alert("O tempo acabou!");
-        // Realiza o redirecionamento ou qualquer ação quando o tempo acabar
-        navigate('/pontuacao');  // Exemplo de redirecionamento após o tempo acabar
-      }
-    }, [isTimeUp, navigate]);
+  useEffect(() => {
+    if (isTimeUp) {
+      alert("Tempo esgotado!");
+      navigate('/'); // redireciona para a tela inicial
+    }
+  }, [isTimeUp, navigate]);
 
   // Função para enviar a resposta ao clicar em uma alternativa
   const enviarResposta = (pontosGanhos) => {
@@ -299,7 +297,7 @@ function PerguntaOptativa() {
         </div>
 
       {mensagem && <p>{mensagem}</p>}
-      {respostaCorreta && <p><strong>Resposta correta:</strong> {respostaCorreta}</p>}
+      {respostaCorreta && <p id="respostaCorreta"><u>Resposta correta:</u> {respostaCorreta}</p>}
     </>
   );
 }

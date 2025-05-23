@@ -2,12 +2,17 @@ const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("./config/db");
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'TelaInicial.js'))
+})
 const PORT = 5000;
 
 
@@ -389,8 +394,12 @@ app.post("/alternativa4", (req, res) => {
       });
       
 
-app.listen(PORT, () => {
+/*app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
+});*/
+
+app.listen(PORT, '0.0.0.0',() => {
+  console.log(`Servidor rodando em http://0.0.0.0:${PORT}`)
 });
 
 module.exports = app;
