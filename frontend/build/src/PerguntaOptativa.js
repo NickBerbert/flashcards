@@ -125,7 +125,7 @@ function PerguntaOptativa() {
   }, [isTimeUp, navigate]);
 
   // Função para enviar a resposta ao clicar em uma alternativa
-  const enviarResposta = (pontosGanhos) => {
+  const enviarResposta = (resposta, pontosGanhos) => {
     if (!questao) {
       setMensagem("Erro: Nenhuma questão carregada!");
       return;
@@ -134,19 +134,16 @@ function PerguntaOptativa() {
       setMensagem("Erro: ID do usuário não encontrado!");
       return;
     }
-    
-
-    // Atualiza a pontuação acumulada
+  
     pontosAcumulados += pontosGanhos;
-
-    // Enviar resposta do usuário
+  
     fetch("http://localhost:5000/responderQuestaoOptativa", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         idUsuario,
         idQuestao: questao.id,
-        respostaUsuario,
+        respostaUsuario: resposta, // <-- usa o parâmetro aqui
         pontos: pontosAcumulados,
       }),
     })
@@ -251,47 +248,30 @@ function PerguntaOptativa() {
         <div className="perguntaOptativa-alternativa">
         <button 
   className="perguntaOptativa-A" 
-  onClick={() => {
-    setRespostaUsuario(alternativa1?.resposta); // Atualiza a resposta selecionada
-    enviarResposta(10); // Chama a função para enviar a resposta
-  }}
+  onClick={() => enviarResposta(alternativa1?.resposta, 10)}
 >
-  <p id="A"> 
-    {alternativa1 ? alternativa1.resposta : "Carregando alternativa..."}
-  </p>
+  <p id="A">{alternativa1 ? alternativa1.resposta : "Carregando alternativa..."}</p>
 </button>
+
 <button 
   className="perguntaOptativa-B" 
-  onClick={() => {
-    setRespostaUsuario(alternativa2?.resposta); // Atualiza a resposta selecionada
-    enviarResposta(10); // Chama a função para enviar a resposta
-  }}
+  onClick={() => enviarResposta(alternativa2?.resposta, 10)}
 >
-  <p id="B"> 
-    {alternativa2 ? alternativa2.resposta : "Carregando alternativa..."}
-  </p>
+  <p id="B">{alternativa2 ? alternativa2.resposta : "Carregando alternativa..."}</p>
 </button>
+
 <button 
   className="perguntaOptativa-C" 
-  onClick={() => {
-    setRespostaUsuario(alternativa3?.resposta); // Atualiza a resposta selecionada
-    enviarResposta(10); // Chama a função para enviar a resposta
-  }}
+  onClick={() => enviarResposta(alternativa3?.resposta, 10)}
 >
-  <p id="C"> 
-    {alternativa3 ? alternativa3.resposta : "Carregando alternativa..."}
-  </p>
+  <p id="C">{alternativa3 ? alternativa3.resposta : "Carregando alternativa..."}</p>
 </button>
+
 <button 
   className="perguntaOptativa-D" 
-  onClick={() => {
-    setRespostaUsuario(alternativa4?.resposta); // Atualiza a resposta selecionada
-    enviarResposta(10); // Chama a função para enviar a resposta
-  }}
+  onClick={() => enviarResposta(alternativa4?.resposta, 10)}
 >
-  <p id="D"> 
-    {alternativa4 ? alternativa4.resposta : "Carregando alternativa..."}
-  </p>
+  <p id="D">{alternativa4 ? alternativa4.resposta : "Carregando alternativa..."}</p>
 </button>
         </div>
         </div>
