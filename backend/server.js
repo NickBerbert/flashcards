@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/src', 'TelaInicial.js'))
+  res.sendFile(path.join(__dirname, '../src', 'TelaInicial.js'))
 })
 const PORT = 5000;
 
