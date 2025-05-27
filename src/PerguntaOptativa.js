@@ -27,7 +27,7 @@ function PerguntaOptativa() {
 
   useEffect(() => {
     // Fetch para obter a alternativa 1
-    fetch("http://137.131.215.255/:5000/alternativa1", {
+    fetch("http://129.159.56.17:5000/alternativa1", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idQuestao }),
@@ -50,7 +50,7 @@ function PerguntaOptativa() {
   
   useEffect(() => {
     // Fetch para obter a alternativa 2
-    fetch("http://137.131.215.255/:5000/alternativa2", {
+    fetch("http://129.159.56.17:5000/alternativa2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idQuestao }),
@@ -73,7 +73,7 @@ function PerguntaOptativa() {
   
   useEffect(() => {
     // Fetch para obter a alternativa 3
-    fetch("http://137.131.215.255/:5000/alternativa3", {
+    fetch("http://129.159.56.17:5000/alternativa3", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idQuestao }),
@@ -96,7 +96,7 @@ function PerguntaOptativa() {
   
   useEffect(() => {
     // Fetch para obter a alternativa 4
-    fetch("http://137.131.215.255/:5000/alternativa4", {
+    fetch("http://129.159.56.17:5000/alternativa4", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idQuestao }),
@@ -137,7 +137,7 @@ function PerguntaOptativa() {
   
     pontosAcumulados += pontosGanhos;
   
-    fetch("http://137.131.215.255/:5000/responderQuestaoOptativa", {
+    fetch("http://129.159.56.17:5000/responderQuestaoOptativa", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -162,7 +162,7 @@ function PerguntaOptativa() {
           // Atraso de 10 segundos antes de redirecionar para a próxima questão
           setTimeout(() => {
             // Buscar a pontuação atual do usuário
-            fetch(`http://137.131.215.255/:5000/getPontuacaoUsuario/${idUsuario}`)
+            fetch(`http://129.159.56.17/:5000/getPontuacaoUsuario/${idUsuario}`)
               .then((res) => res.json())
               .then((usuarioData) => {
                 if (usuarioData.error) {
@@ -175,7 +175,7 @@ function PerguntaOptativa() {
                 // Verifica se a pontuação acumulada é maior do que a pontuação no banco de dados
                 if (pontosAcumulados > pontuacaoAtual) {
                   // Atualiza a pontuação no banco de dados
-                  fetch("http://137.131.215.255/:5000/atualizarPontuacao", {
+                  fetch("http://129.159.56.17:5000/atualizarPontuacao", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -199,7 +199,7 @@ function PerguntaOptativa() {
               .catch((error) => console.error("Erro ao buscar pontuação do usuário:", error));
 
             // Redireciona para a próxima questão após o atraso
-            fetch("http://137.131.215.255/:5000/questaoAtual", {
+            fetch("http://129.159.56.17:5000/questaoAtual", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ idUsuario, pontosAcumulados }),
