@@ -13,6 +13,10 @@ app.use(cors()); // Permite todas as origens para facilitar o desenvolvimento
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.get('/teste-publico', (req, res) => {
+  res.send('Servidor Node.js acessível publicamente!');
+});
+
 const PORT = 5000;
 
 // --- SUAS ROTAS DA API VÊM AQUI ANTES DE QUALQUER ROTA DE SERVIR ARQUIVOS ESTATICOS OU WILDCARD ---
