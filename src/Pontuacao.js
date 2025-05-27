@@ -8,7 +8,7 @@ function Pontuacao() {
     const [pontuacoes, setPontuacoes] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/pontuacao")
+        fetch("http://137.131.215.255/:5000/pontuacao")
             .then((res) => res.json())
             .then((data) => setPontuacoes(data))
             .catch((err) => console.error("Erro ao buscar pontuações:", err));

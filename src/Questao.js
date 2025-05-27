@@ -26,7 +26,7 @@ function Questao() {
   let pontosAcumulados = location.state?.pontosAcumulados || 0;
 
   useEffect(() => {
-    fetch("http://localhost:5000/questaoAtual", {
+    fetch("http://137.131.215.255/:5000/questaoAtual", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idUsuario })
