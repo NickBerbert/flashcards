@@ -6,7 +6,7 @@ import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.p
 function Tutorial() {
     const [message, setMessage] = useState("Testando conexão...");
     useEffect(() => {
-      fetch("http://129.159.56.17:5000/tutorial")
+      fetch("/tutorial")
         .then((res) => res.json())
         .then((data) => setMessage(`Backend conectado: ${data.message}`))
         .catch((err) => setMessage("Erro ao conectar ao backend!"));

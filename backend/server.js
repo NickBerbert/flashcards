@@ -17,7 +17,7 @@ app.get('/teste-publico', (req, res) => {
   res.send('Servidor Node.js acessível publicamente!');
 });
 
-const PORT = 5000;
+const PORT = 3001;
 
 // --- SUAS ROTAS DA API VÊM AQUI ANTES DE QUALQUER ROTA DE SERVIR ARQUIVOS ESTATICOS OU WILDCARD ---
 

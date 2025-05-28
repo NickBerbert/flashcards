@@ -14,7 +14,7 @@ function TelaInicial() {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    fetch("http://129.159.56.17:5000/tutorial")
+    fetch("/tutorial")
       .then((res) => res.json());
   }, []);
 

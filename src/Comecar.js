@@ -18,7 +18,7 @@ function Comecar() {
 
 
   useEffect(() => {
-    fetch("http://129.159.56.17/:5000/comecar")
+    fetch("/comecar")
       .then((res) => res.json())
       .then((data) => setMessage(`Backend conectado: ${data.message}`))
       .catch((err) => setMessage("Erro ao conectar ao backend!"));
@@ -48,7 +48,7 @@ function Comecar() {
       return;
     }
 
-    fetch("http://129.159.56.17/:5000/cadastrar", {
+    fetch("/cadastrar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nome }) 
