@@ -13,6 +13,15 @@ function TelaInicial() {
   const [isPlaying, setIsPlaying] = useState(false); // Controla o estado de play/pause
   const audioRef = useRef(null);
 
+    useEffect(() => {
+    if (!document.querySelector('meta[name="viewport"]')) {
+      const meta = document.createElement("meta");
+      meta.name = "viewport";
+      meta.content = "width=device-width, initial-scale=1.0";
+      document.head.appendChild(meta);
+    }
+  }, []);
+
   useEffect(() => {
     fetch("/tutorial")
       .then((res) => res.json());
