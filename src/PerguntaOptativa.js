@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import "./perguntaOptativa.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
 import { useNavigate, useLocation } from "react-router-dom";
-import { TimerContext } from './TimerContext';
+import { useTimer } from './TimerContext';
 
 function PerguntaOptativa() {
-  const { tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp } = useContext(TimerContext);
+  const { tempoRestante, isTimeUp } = useTimer();
   const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [respostaCorreta, setRespostaCorreta] = useState(null);
@@ -27,7 +27,7 @@ function PerguntaOptativa() {
 
   useEffect(() => {
     // Fetch para obter a alternativa 1
-    fetch("http://localhost:5000/alternativa1", {
+    fetch("/alternativa1", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idQuestao }),
@@ -50,7 +50,7 @@ function PerguntaOptativa() {
   
   useEffect(() => {
     // Fetch para obter a alternativa 2
-    fetch("http://localhost:5000/alternativa2", {
+    fetch("/alternativa2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idQuestao }),
@@ -73,7 +73,7 @@ function PerguntaOptativa() {
   
   useEffect(() => {
     // Fetch para obter a alternativa 3
-    fetch("http://localhost:5000/alternativa3", {
+    fetch("/alternativa3", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idQuestao }),
@@ -96,7 +96,7 @@ function PerguntaOptativa() {
   
   useEffect(() => {
     // Fetch para obter a alternativa 4
-    fetch("http://localhost:5000/alternativa4", {
+    fetch("/alternativa4", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idQuestao }),
@@ -117,17 +117,15 @@ function PerguntaOptativa() {
       });
   }, [idQuestao]);
 
-    useEffect(() => {
-      console.log("Tempo acabou: ", isTimeUp)
-      if (isTimeUp) {
-        alert("O tempo acabou!");
-        // Realiza o redirecionamento ou qualquer ação quando o tempo acabar
-        navigate('/pontuacao');  // Exemplo de redirecionamento após o tempo acabar
-      }
-    }, [isTimeUp, navigate]);
+  useEffect(() => {
+    if (isTimeUp) {
+      alert("Tempo esgotado!");
+      navigate('/'); // redireciona para a tela inicial
+    }
+  }, [isTimeUp, navigate]);
 
   // Função para enviar a resposta ao clicar em uma alternativa
-  const enviarResposta = (pontosGanhos) => {
+  const enviarResposta = (resposta, pontosGanhos) => {
     if (!questao) {
       setMensagem("Erro: Nenhuma questão carregada!");
       return;
@@ -136,19 +134,16 @@ function PerguntaOptativa() {
       setMensagem("Erro: ID do usuário não encontrado!");
       return;
     }
-    
-
-    // Atualiza a pontuação acumulada
+  
     pontosAcumulados += pontosGanhos;
-
-    // Enviar resposta do usuário
-    fetch("http://localhost:5000/responderQuestaoOptativa", {
+  
+    fetch("/responderQuestaoOptativa", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         idUsuario,
         idQuestao: questao.id,
-        respostaUsuario,
+        respostaUsuario: resposta, // <-- usa o parâmetro aqui
         pontos: pontosAcumulados,
       }),
     })
@@ -167,7 +162,7 @@ function PerguntaOptativa() {
           // Atraso de 10 segundos antes de redirecionar para a próxima questão
           setTimeout(() => {
             // Buscar a pontuação atual do usuário
-            fetch(`http://localhost:5000/getPontuacaoUsuario/${idUsuario}`)
+            fetch(`/getPontuacaoUsuario/${idUsuario}`)
               .then((res) => res.json())
               .then((usuarioData) => {
                 if (usuarioData.error) {
@@ -180,7 +175,7 @@ function PerguntaOptativa() {
                 // Verifica se a pontuação acumulada é maior do que a pontuação no banco de dados
                 if (pontosAcumulados > pontuacaoAtual) {
                   // Atualiza a pontuação no banco de dados
-                  fetch("http://localhost:5000/atualizarPontuacao", {
+                  fetch("/atualizarPontuacao", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -204,7 +199,7 @@ function PerguntaOptativa() {
               .catch((error) => console.error("Erro ao buscar pontuação do usuário:", error));
 
             // Redireciona para a próxima questão após o atraso
-            fetch("http://localhost:5000/questaoAtual", {
+            fetch("/questaoAtual", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ idUsuario, pontosAcumulados }),
@@ -253,53 +248,36 @@ function PerguntaOptativa() {
         <div className="perguntaOptativa-alternativa">
         <button 
   className="perguntaOptativa-A" 
-  onClick={() => {
-    setRespostaUsuario(alternativa1?.resposta); // Atualiza a resposta selecionada
-    enviarResposta(10); // Chama a função para enviar a resposta
-  }}
+  onClick={() => enviarResposta(alternativa1?.resposta, 10)}
 >
-  <p id="A"> 
-    {alternativa1 ? alternativa1.resposta : "Carregando alternativa..."}
-  </p>
+  <p id="A">{alternativa1 ? alternativa1.resposta : "Carregando alternativa..."}</p>
 </button>
+
 <button 
   className="perguntaOptativa-B" 
-  onClick={() => {
-    setRespostaUsuario(alternativa2?.resposta); // Atualiza a resposta selecionada
-    enviarResposta(10); // Chama a função para enviar a resposta
-  }}
+  onClick={() => enviarResposta(alternativa2?.resposta, 10)}
 >
-  <p id="B"> 
-    {alternativa2 ? alternativa2.resposta : "Carregando alternativa..."}
-  </p>
+  <p id="B">{alternativa2 ? alternativa2.resposta : "Carregando alternativa..."}</p>
 </button>
+
 <button 
   className="perguntaOptativa-C" 
-  onClick={() => {
-    setRespostaUsuario(alternativa3?.resposta); // Atualiza a resposta selecionada
-    enviarResposta(10); // Chama a função para enviar a resposta
-  }}
+  onClick={() => enviarResposta(alternativa3?.resposta, 10)}
 >
-  <p id="C"> 
-    {alternativa3 ? alternativa3.resposta : "Carregando alternativa..."}
-  </p>
+  <p id="C">{alternativa3 ? alternativa3.resposta : "Carregando alternativa..."}</p>
 </button>
+
 <button 
   className="perguntaOptativa-D" 
-  onClick={() => {
-    setRespostaUsuario(alternativa4?.resposta); // Atualiza a resposta selecionada
-    enviarResposta(10); // Chama a função para enviar a resposta
-  }}
+  onClick={() => enviarResposta(alternativa4?.resposta, 10)}
 >
-  <p id="D"> 
-    {alternativa4 ? alternativa4.resposta : "Carregando alternativa..."}
-  </p>
+  <p id="D">{alternativa4 ? alternativa4.resposta : "Carregando alternativa..."}</p>
 </button>
         </div>
         </div>
 
       {mensagem && <p>{mensagem}</p>}
-      {respostaCorreta && <p><strong>Resposta correta:</strong> {respostaCorreta}</p>}
+      {respostaCorreta && <p id="respostaCorreta"><u>Resposta correta:</u> {respostaCorreta}</p>}
     </>
   );
 }

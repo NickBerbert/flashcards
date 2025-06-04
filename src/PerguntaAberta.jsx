@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect} from "react";
 import "./perguntaAberta.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
 import { useNavigate, useLocation } from "react-router-dom";
-import { TimerContext } from './TimerContext';
+import { useTimer } from './TimerContext';
 
 function PerguntaAberta() {
-  const { tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp } = useContext(TimerContext);
+  const { tempoRestante, isTimeUp } = useTimer();
   const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [respostaCorreta, setRespostaCorreta] = useState(null);
@@ -18,14 +18,12 @@ function PerguntaAberta() {
 
   console.log("ID do Usuário recebido:", idUsuario);
 
-    useEffect(() => {
-      console.log("Tempo acabou: ", isTimeUp)
-      if (isTimeUp) {
-        alert("O tempo acabou!");
-        // Realiza o redirecionamento ou qualquer ação quando o tempo acabar
-        navigate('/pontuacao');  // Exemplo de redirecionamento após o tempo acabar
-      }
-    }, [isTimeUp, navigate]);
+  useEffect(() => {
+    if (isTimeUp) {
+      alert("Tempo esgotado!");
+      navigate('/'); // redireciona para a tela inicial
+    }
+  }, [isTimeUp, navigate]);
 
   const enviarResposta = (pontosGanhos) => {
     if (!questao) {
@@ -45,7 +43,7 @@ function PerguntaAberta() {
     pontosAcumulados += pontosGanhos;
 
     // Enviar resposta do usuário
-    fetch("http://localhost:5000/responderQuestao", {
+    fetch("/responderQuestao", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -70,7 +68,7 @@ function PerguntaAberta() {
           // Atraso de 10 segundos antes de redirecionar para a próxima questão
           setTimeout(() => {
             // Buscar a pontuação atual do usuário
-            fetch(`http://localhost:5000/getPontuacaoUsuario/${idUsuario}`)
+            fetch(`/getPontuacaoUsuario/${idUsuario}`)
               .then((res) => res.json())
               .then((usuarioData) => {
                 if (usuarioData.error) {
@@ -83,7 +81,7 @@ function PerguntaAberta() {
                 // Verifica se a pontuação acumulada é maior do que a pontuação no banco de dados
                 if (pontosAcumulados > pontuacaoAtual) {
                   // Atualiza a pontuação no banco de dados
-                  fetch("http://localhost:5000/atualizarPontuacao", {
+                  fetch("/atualizarPontuacao", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -107,7 +105,7 @@ function PerguntaAberta() {
               .catch((error) => console.error("Erro ao buscar pontuação do usuário:", error));
 
             // Redireciona para a próxima questão após o atraso
-            fetch("http://localhost:5000/questaoAtual", {
+            fetch("/questaoAtual", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ idUsuario, pontosAcumulados }),

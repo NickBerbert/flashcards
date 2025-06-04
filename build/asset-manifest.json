@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.afeb713a.css",
+    "main.js": "/static/js/main.35818042.js",
+    "static/js/453.bb255750.chunk.js": "/static/js/453.bb255750.chunk.js",
+    "static/media/lofi - no copyright.mp3": "/static/media/lofi - no copyright.d06c3adfd0a36d6b442f.mp3",
+    "static/media/fontawesome-webfont.svg?v=4.7.0": "/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
+    "static/media/A_pixel_art_of_a_small__cute_dog_wearing_a_red_sup-removebg-preview.png": "/static/media/A_pixel_art_of_a_small__cute_dog_wearing_a_red_sup-removebg-preview.00f2c8a67fb18eba572c.png",
+    "static/media/fontawesome-webfont.eot": "/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
+    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
+    "static/media/22542143-pixel-arte-jogos-moeda-moeda-vetor-removebg-preview.png": "/static/media/22542143-pixel-arte-jogos-moeda-moeda-vetor-removebg-preview.37181bf1c154c463a6a3.png",
+    "static/media/fontawesome-webfont.woff?v=4.7.0": "/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "static/media/luxa.org-pixelate-01-raio-png-removebg-preview.png": "/static/media/luxa.org-pixelate-01-raio-png-removebg-preview.a8c129343a88c4486c5d.png",
+    "index.html": "/index.html",
+    "main.afeb713a.css.map": "/static/css/main.afeb713a.css.map",
+    "main.35818042.js.map": "/static/js/main.35818042.js.map",
+    "453.bb255750.chunk.js.map": "/static/js/453.bb255750.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.afeb713a.css",
+    "static/js/main.35818042.js"
+  ]
+}
