@@ -1,203 +1,290 @@
-/* Fonte pixel retrô */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
 
 body {
-  background-color: #2e2c2c;
-  font-family: 'Press Start 2P', sans-serif;
-  color: white;
+    background-color: #3B3939;
+    font-family: 'Jersey 10', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-/* Container principal */
-.container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+img {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 45px;
 }
 
-/* Faixa cinza escuro centralizada */
 .telaInicial-cinza_escuro {
-  background-color: #1e1e1e;
-  padding: 2rem;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    background-color: #222;
+    width: 100vw;
+    padding: 0px;
+    height: 200px;
 }
 
-/* Logo + textos */
-.telaInicial-logo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+.telaInicial-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
 }
 
-.telaInicial-logo-cachorro {
-  max-width: 150px;
-  height: auto;
-  margin-bottom: 1rem;
+.telaInicial-logo-text {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
 }
 
-/* Flashcards com raio */
-.telaInicial-flashcards-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.telaInicial-flashcards {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #fff;
-  z-index: 2;
-}
-
-.telaInicial-text-shadow1 {
-  position: absolute;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: red;
-  transform: translate(2px, 2px);
-  z-index: 1;
-}
-
-.telaInicial-icone-raio {
-  max-width: 60px;
-  height: auto;
-  margin-left: 10px;
-}
-
-/* JAVA */
-.telaInicial-java {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: red;
-  margin-top: 0.5rem;
-}
-
-/* Edition com sombra */
-.telaInicial-edition-wrapper {
-  position: relative;
-  margin-top: 0.3rem;
-}
-
-.telaInicial-edition {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: white;
-  position: relative;
-  z-index: 2;
-}
-
-.telaInicial-text-shadow2 {
-  position: absolute;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: red;
-  top: 0;
-  left: 0;
-  transform: translate(2px, 2px);
-  z-index: 1;
-}
-
-/* Botão engrenagem */
 #cog {
-  font-size: 1.5rem;
-  cursor: pointer;
-  margin-top: 1rem;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
 }
 
-/* Botões inferiores */
-.telaInicial-botoes {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-  gap: 1rem;
+.player-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.telaInicial-botao {
-  background-color: #ffcc00;
-  padding: 0.8rem 2rem;
-  border-radius: 8px;
-  font-weight: bold;
-  font-family: 'Press Start 2P', sans-serif;
-  color: black;
-  box-shadow: 3px 3px black;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.player-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-.telaInicial-botao:hover {
-  transform: scale(1.05);
+input[type="range"] {
+    width: 100px;
 }
 
 /* Sidebar */
 .sidebar {
-  position: fixed;
-  top: 0;
-  right: -300px;
-  width: 300px;
-  height: 100%;
-  background-color: #1e1e1e;
-  transition: right 0.3s ease;
-  padding: 1.5rem;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  z-index: 999;
+    position: fixed;
+    top: 0;
+    right: -300px; /* Garante que saia totalmente da tela */
+    width: 200px;
+    height: 100%;
+    background: #222;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    z-index: 1000;
+    color: #fff;
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .sidebar.open {
-  right: 0;
+    right: 0; /* Sidebar aparece ao adicionar a classe "open" */
 }
 
-.sidebar p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  cursor: pointer;
-}
-
+/* Botão de fechar */
 .close-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  float: right;
-  cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: white;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+/* Estilo do botão Música */
+#tela-inicial-musica {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    background: #222;
+    transition: background 0.2s ease-in-out;
+}
+
+#tela-inicial-musica:hover {
+    background: #666;
 }
 
 /* Player de música */
 .player-container {
-  margin-top: 1rem;
-  background-color: #333;
-  padding: 1rem;
-  border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .player-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .player-button {
-  background-color: #ffcc00;
-  padding: 0.5rem 1rem;
-  border: none;
-  font-weight: bold;
-  font-family: 'Press Start 2P', sans-serif;
-  cursor: pointer;
-  color: black;
-  box-shadow: 2px 2px black;
-  border-radius: 5px;
+    background-color: black;
+    border: none;
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.player-button:hover {
+    background-color: #666;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Texto e botões na Sidebar */
+.sidebar p {
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.2s ease-in-out;
+}
+
+.sidebar p:hover {
+    background: #666;
+}
+
+.telaInicial-icone-raio {
+    position: absolute;
+    right: -65px;
+    top: 5px;
+    width: 57px;
+    height: 57px;
+    padding-top: 22px;
+}
+
+.telaInicial-flashcards-wrapper, .telaInicial-edition-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Sombra para o "FLASHCARDS" */
+.telaInicial-text-shadow1 {
+    position: absolute;
+    color: red;
+    font-size: 60px;
+    z-index: 0;
+    left: 2px;
+    top: 22px;
+    transform: translate(3px, 3px);
+}
+
+/* Sombra para o "edition" */
+.telaInicial-text-shadow2 {
+    position: absolute;
+    color: red;
+    font-size: 35px;
+    z-index: 0;
+    left: 61px;
+    top: -37px;
+    transform: translate(2px, 2px);
+}
+
+/* Texto principal */
+.telaInicial-flashcards {
+    color: #fff;
+    font-size: 60px;
+    padding-top: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.telaInicial-edition {
+    color: #fff;
+    font-size: 35px;
+    position: relative;
+    bottom: 35px;
+    right: -60px;
+    z-index: 1;
+}
+
+.telaInicial-edition-wrapper {
+    margin-top: -5px;
+}
+
+.telaInicial-java {
+    color: #F81919;
+    font-size: 75px;
+    padding-right: 45px;
+    margin-top: -22px;
+}
+
+/* Botões */
+.telaInicial-botoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.telaInicial-botao {
+    background-color: #FFD302;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    width: 150px;
+    cursor: pointer;
+    margin: 10px auto;
+    box-shadow: 3px 3px 0px black;
+    transition: all 0.2s ease-in-out;
+}
+
+.telaInicial-botao:hover {
+    background-color: #FFD302;
+    transform: scale(1.05);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.telaInicial-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.telaInicial-logo-cachorro {
+    width: 10vw;/* Ajuste o tamanho da imagem do cachorro */
+    max-width: 150;
+    height: auto;
+}
+
+.telaInicial-logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
