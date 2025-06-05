@@ -6,29 +6,60 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     overflow-x: hidden;
+}
+
+/* Restrição: Só funciona em modo paisagem no celular */
+@media screen and (orientation: portrait) and (max-width: 768px) {
+    body::before {
+        content: "Por favor, gire o dispositivo para o modo paisagem 📱🔄";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+        color: #fff;
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        z-index: 9999;
+    }
+
+    .telaInicial-cinza_escuro,
+    .telaInicial-logo,
+    .telaInicial-botoes,
+    .player-container,
+    .sidebar,
+    #cog {
+        display: none !important;
+    }
+}
+
+img {
+    width: 150px;
+    height: 150px;
+    margin-top: 10px;
+    z-index: 2;
 }
 
 .telaInicial-cinza_escuro {
     background-color: #222;
     width: 100%;
-    height: 35vh; /* Altura proporcional à tela */
+    height: 35vh;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     position: relative;
-}
-
-/* Logo (cachorro) por cima do texto */
-.telaInicial-logo-cachorro {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    width: 120px;
-    height: 120px;
-    z-index: 3;
+    padding-top: 10px;
+    box-sizing: border-box;
 }
 
 .telaInicial-logo {
@@ -37,14 +68,15 @@ body {
     align-items: center;
     text-align: center;
     gap: 5px;
-    margin-top: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .telaInicial-logo-text {
     display: flex;
     flex-direction: column;
-    align-items: center;
     position: relative;
+    align-items: center;
 }
 
 #cog {
@@ -54,81 +86,41 @@ body {
     font-size: 24px;
     color: white;
     cursor: pointer;
-    z-index: 5;
 }
 
-/* Textos com sombras */
-.telaInicial-text-shadow1 {
-    position: absolute;
-    color: red;
-    font-size: 60px;
-    z-index: 1;
-    left: 2px;
-    top: 22px;
-    transform: translate(3px, 3px);
-}
-
-.telaInicial-text-shadow2 {
-    position: absolute;
-    color: red;
-    font-size: 35px;
-    z-index: 1;
-    left: 61px;
-    top: -37px;
-    transform: translate(2px, 2px);
-}
-
-.telaInicial-flashcards {
-    color: #fff;
-    font-size: 60px;
-    padding-top: 25px;
-    position: relative;
-    z-index: 2;
-}
-
-.telaInicial-edition {
-    color: #fff;
-    font-size: 35px;
-    position: relative;
-    bottom: 35px;
-    right: -60px;
-    z-index: 2;
-}
-
-.telaInicial-java {
-    color: #F81919;
-    font-size: 75px;
-    padding-right: 45px;
-    margin-top: -22px;
-    z-index: 2;
-    position: relative;
-}
-
-/* Botões */
-.telaInicial-botoes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.telaInicial-botao {
-    background-color: #FFD302;
-    color: black;
-    padding: 10px 20px;
+.player-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    padding: 10px;
     border-radius: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    width: 150px;
-    cursor: pointer;
-    margin: 10px auto;
-    box-shadow: 3px 3px 0px black;
-    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
 }
 
-.telaInicial-botao:hover {
-    transform: scale(1.05);
+.player-button {
+    background: black;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.player-button:hover {
+    background-color: #666;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
 }
 
 /* Sidebar */
@@ -163,18 +155,6 @@ body {
     align-self: flex-end;
 }
 
-.sidebar p {
-    margin: 10px 0;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background 0.2s ease-in-out;
-}
-
-.sidebar p:hover {
-    background: #666;
-}
-
 #tela-inicial-musica {
     cursor: pointer;
     padding: 10px;
@@ -187,46 +167,134 @@ body {
     background: #666;
 }
 
-/* Player */
-.player-container {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: black;
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 10;
-}
-
-.player-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 16px;
+.sidebar p {
+    margin: 10px 0;
     cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.2s ease-in-out;
 }
 
-input[type="range"] {
-    width: 100px;
+.sidebar p:hover {
+    background: #666;
+}
+
+.telaInicial-icone-raio {
+    position: absolute;
+    right: -65px;
+    top: 5px;
+    width: 57px;
+    height: 57px;
+    padding-top: 22px;
+}
+
+.telaInicial-flashcards-wrapper,
+.telaInicial-edition-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.telaInicial-text-shadow1 {
+    position: absolute;
+    color: red;
+    font-size: 60px;
+    z-index: 0;
+    left: 2px;
+    top: 22px;
+    transform: translate(3px, 3px);
+}
+
+.telaInicial-text-shadow2 {
+    position: absolute;
+    color: red;
+    font-size: 35px;
+    z-index: 0;
+    left: 61px;
+    top: -37px;
+    transform: translate(2px, 2px);
+}
+
+.telaInicial-flashcards {
+    color: #fff;
+    font-size: 60px;
+    padding-top: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.telaInicial-edition {
+    color: #fff;
+    font-size: 35px;
+    position: relative;
+    bottom: 35px;
+    right: -60px;
+    z-index: 1;
+}
+
+.telaInicial-edition-wrapper {
+    margin-top: -5px;
+}
+
+.telaInicial-java {
+    color: #F81919;
+    font-size: 75px;
+    padding-right: 45px;
+    margin-top: -22px;
+}
+
+.telaInicial-botoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.telaInicial-botao {
+    background-color: #FFD302;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    width: 150px;
+    cursor: pointer;
+    margin: 10px auto;
+    box-shadow: 3px 3px 0px black;
+    transition: all 0.2s ease-in-out;
+}
+
+.telaInicial-botao:hover {
+    background-color: #FFD302;
+    transform: scale(1.05);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.telaInicial-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.telaInicial-logo-cachorro {
+    width: 30vw;
+    max-width: 150px;
+    height: auto;
+    z-index: 2;
 }
 
 /* Responsividade */
 @media (max-width: 600px) {
-    .telaInicial-cinza_escuro {
-        height: 40vh;
-    }
-
-    .telaInicial-logo-cachorro {
-        width: 80px;
-        height: 80px;
-        top: 10px;
-        left: 10px;
-    }
-
     .telaInicial-flashcards,
     .telaInicial-text-shadow1 {
         font-size: 30px;
@@ -252,6 +320,19 @@ input[type="range"] {
     .sidebar {
         width: 70vw;
         font-size: 20px;
+    }
+
+    .telaInicial-icone-raio {
+        right: -20px;
+        width: 40px;
+        height: 40px;
+    }
+
+    img {
+        width: 80px;
+        height: auto;
+        top: 20px;
+        left: 10px;
     }
 
     .player-container {
