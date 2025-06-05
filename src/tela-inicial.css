@@ -278,7 +278,7 @@ input[type="range"] {
 }
 
 .telaInicial-logo-cachorro {
-    width: 30vw;/* Ajuste o tamanho da imagem do cachorro */
+    width: 10vw;/* Ajuste o tamanho da imagem do cachorro */
     max-width: 150;
     height: auto;
 }
