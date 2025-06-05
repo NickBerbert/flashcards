@@ -6,60 +6,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
-    overflow-x: hidden;
-}
-
-/* Restrição: Só funciona em modo paisagem no celular */
-@media screen and (orientation: portrait) and (max-width: 768px) {
-    body::before {
-        content: "Por favor, gire o dispositivo para o modo paisagem 📱🔄";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: #000;
-        color: #fff;
-        font-size: 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
-        z-index: 9999;
-    }
-
-    .telaInicial-cinza_escuro,
-    .telaInicial-logo,
-    .telaInicial-botoes,
-    .player-container,
-    .sidebar,
-    #cog {
-        display: none !important;
-    }
 }
 
 img {
+    position: absolute;
     width: 150px;
     height: 150px;
-    margin-top: 10px;
-    z-index: 2;
+    top: 45px;
 }
 
 .telaInicial-cinza_escuro {
     background-color: #222;
-    width: 100%;
-    height: 35vh;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    position: relative;
-    padding-top: 10px;
-    box-sizing: border-box;
+    width: 100vw;
+    padding: 0px;
+    height: 200px;
 }
 
 .telaInicial-logo {
@@ -68,8 +30,6 @@ img {
     align-items: center;
     text-align: center;
     gap: 5px;
-    position: relative;
-    z-index: 1;
 }
 
 .telaInicial-logo-text {
@@ -99,35 +59,25 @@ img {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-direction: column;
 }
 
 .player-button {
-    background: black;
+    background: none;
     border: none;
     color: white;
-    padding: 8px 20px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.player-button:hover {
-    background-color: #666;
 }
 
 input[type="range"] {
-    width: 100%;
-    margin-top: 10px;
+    width: 100px;
 }
 
 /* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
-    right: -300px;
+    right: -300px; /* Garante que saia totalmente da tela */
     width: 200px;
     height: 100%;
     background: #222;
@@ -143,9 +93,10 @@ input[type="range"] {
 }
 
 .sidebar.open {
-    right: 0;
+    right: 0; /* Sidebar aparece ao adicionar a classe "open" */
 }
 
+/* Botão de fechar */
 .close-btn {
     background: none;
     border: none;
@@ -155,6 +106,7 @@ input[type="range"] {
     align-self: flex-end;
 }
 
+/* Estilo do botão Música */
 #tela-inicial-musica {
     cursor: pointer;
     padding: 10px;
@@ -167,6 +119,42 @@ input[type="range"] {
     background: #666;
 }
 
+/* Player de música */
+.player-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-button {
+    background-color: black;
+    border: none;
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.player-button:hover {
+    background-color: #666;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Texto e botões na Sidebar */
 .sidebar p {
     margin: 10px 0;
     cursor: pointer;
@@ -188,12 +176,12 @@ input[type="range"] {
     padding-top: 22px;
 }
 
-.telaInicial-flashcards-wrapper,
-.telaInicial-edition-wrapper {
+.telaInicial-flashcards-wrapper, .telaInicial-edition-wrapper {
     position: relative;
     display: inline-block;
 }
 
+/* Sombra para o "FLASHCARDS" */
 .telaInicial-text-shadow1 {
     position: absolute;
     color: red;
@@ -204,6 +192,7 @@ input[type="range"] {
     transform: translate(3px, 3px);
 }
 
+/* Sombra para o "edition" */
 .telaInicial-text-shadow2 {
     position: absolute;
     color: red;
@@ -214,6 +203,7 @@ input[type="range"] {
     transform: translate(2px, 2px);
 }
 
+/* Texto principal */
 .telaInicial-flashcards {
     color: #fff;
     font-size: 60px;
@@ -242,6 +232,7 @@ input[type="range"] {
     margin-top: -22px;
 }
 
+/* Botões */
 .telaInicial-botoes {
     display: flex;
     flex-direction: column;
@@ -282,66 +273,18 @@ input[type="range"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 10px;
 }
 
 .telaInicial-logo-cachorro {
-    width: 30vw;
-    max-width: 150px;
+    width: 30vw;/* Ajuste o tamanho da imagem do cachorro */
+    max-width: 150;
     height: auto;
-    z-index: 2;
 }
 
-/* Responsividade */
-@media (max-width: 600px) {
-    .telaInicial-flashcards,
-    .telaInicial-text-shadow1 {
-        font-size: 30px;
-    }
-
-    .telaInicial-edition,
-    .telaInicial-text-shadow2 {
-        font-size: 20px;
-    }
-
-    .telaInicial-java {
-        font-size: 40px;
-        padding-right: 10px;
-        margin-top: -10px;
-    }
-
-    .telaInicial-botao {
-        width: 80vw;
-        font-size: 16px;
-        padding: 8px 0;
-    }
-
-    .sidebar {
-        width: 70vw;
-        font-size: 20px;
-    }
-
-    .telaInicial-icone-raio {
-        right: -20px;
-        width: 40px;
-        height: 40px;
-    }
-
-    img {
-        width: 80px;
-        height: auto;
-        top: 20px;
-        left: 10px;
-    }
-
-    .player-container {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .player-button {
-        padding: 6px 14px;
-        font-size: 14px;
-    }
+.telaInicial-logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
